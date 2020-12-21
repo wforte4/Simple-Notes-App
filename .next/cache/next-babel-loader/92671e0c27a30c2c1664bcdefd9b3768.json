@@ -1,0 +1,1 @@
+{"ast":null,"code":"export var GET_PROJECTS = 'GET_PROJECTS';","map":{"version":3,"sources":["/Users/williamforte/Canvas/SynapseFlash/store/types.js"],"names":["GET_PROJECTS"],"mappings":"AAAA,OAAO,IAAMA,YAAY,GAAG,cAArB","sourcesContent":["export const GET_PROJECTS = 'GET_PROJECTS';"]},"metadata":{},"sourceType":"module"}
