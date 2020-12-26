@@ -1,16 +1,29 @@
 import { ParallaxBanner } from '../components/elements'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { fetchProjects } from '../store/actions/postAction'
 
 function Index() {
+
+    const dispatch = useDispatch()
+
+    const {projects} = useSelector(state => state.post)
+
+    useEffect(() => {
+        dispatch(fetchProjects())
+    }, [])
 
     return (
         <div>
             <ParallaxBanner
                 image='/mainbg.png'
-                height='600px'
+                height='800px'
                 shadow
             />
             <div className='content'>
-
+                {projects && projects.map((project, i) => {
+                    return <h2 key={i}>{project.title}</h2>
+                })}
             </div>
             <ParallaxBanner
                 image='/mainbg.png'
