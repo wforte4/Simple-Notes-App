@@ -39,6 +39,7 @@ function Login() {
                 />
                 <input
                     name='password'
+                    type='password'
                     value={inputs.password}
                     onChange={handleType}
                     placeholder='Password'
@@ -53,22 +54,24 @@ function Login() {
                     position: absolute;
                     top: 50%;
                     left: 50%;
-                    padding: 0;
+                    padding: 5%;
                     display: flex;
                     flex-flow: column wrap;
                     justify-content: center;
                     align-items: center;
                     transform: translate(-50%,-50%);
-                    background: white;
-                    border-radius: 3px;
+                    background: rgba(30, 30, 30, .9);
+                    backdrop-filter: blur(15px);
+                    border-radius: 22px;
                     box-shadow: ${Theme.sh.mat};
                 }
                 input {
                     float: left;
                     width: 80%;
-                    padding: 5px 5%;
+                    padding: 8px 5%;
                     margin: 10px 5%;
                     font: 15px 'Roboto';
+                    border-radius: 10px;
                 }
                 button {
                     float: left;
@@ -76,6 +79,9 @@ function Login() {
                     padding: 5px 5%;
                     margin: 5px 5%;
                     margin-top: 40px;
+                    border: none;
+                    box-shadow: ${Theme.sh.mat};
+                    cursor: pointer;
                     font: 15px 'Roboto';
                 }
                 form img {
@@ -90,6 +96,7 @@ function Login() {
                     width: 100%;
                     height: 100%;
                     position: relative;
+                    background: ${Theme.colors.dark};
                 }
                 #bgbody {
                     position: absolute;

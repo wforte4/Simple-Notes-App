@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/wforte4/SynapseFlash#readme",
   "dependencies": {
+    "jwt-decode": "^3.1.2",
     "next": "^10.0.3",
     "next-redux-wrapper": "^6.0.2",
     "react": "^17.0.1",

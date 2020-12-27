@@ -106,9 +106,15 @@ export const DropDown = ({width, height, top, right, isActive, links}) => {
     return (
         <div className='dropdown'>
             {links && links.map((link, i) => {
-                return (
-                    <Link key={i} href={link.href}><h2>{link.title}</h2></Link>
-                )
+                if(link.href) {
+                    return (
+                        <Link key={i} href={link.href}><h2>{link.title}</h2></Link>
+                    )
+                } else {    
+                    return (
+                        <h2 onClick={link.action}>{link.title}</h2>
+                    )
+                }
             })}
             <style jsx>{`
                 .dropdown {
@@ -120,9 +126,9 @@ export const DropDown = ({width, height, top, right, isActive, links}) => {
                     opacity: ${isActive ? 1: 0};
                     width: ${width};
                     height: ${height};
-                    top: ${isActive ? top: 0};
-                    right: ${right};
-                    transform: translateY(${isActive ? 0: '-150%'});
+                    top: ${top};
+                    right: ${isActive ? right: 0};
+                    transform: translateX(${isActive ? 0: '150%'});
                 }
                 .dropdown h2 {
                     float: left;

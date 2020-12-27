@@ -36,6 +36,14 @@ export const postReducer = (state = initialState, action) => {
                 loading: false,
                 eror: null
             }
+        case types.LOGOUT:
+            return {
+                ...state,
+                profile: action.payload,
+                auth: action.payload,
+                loading: false,
+                eror: null
+            }
         default:
             return state
     }

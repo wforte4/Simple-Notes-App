@@ -1,14 +1,27 @@
 import Theme from '../styles/theme'
 import Head from "next/head";
 import Link from 'next/link'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { DropDown } from '../components/elements'
 import { useState } from 'react'
+import { signOut } from '../store/actions/postAction'
 
 function Navigation() {
 
     const {profile} = useSelector(state => state.post)
     const [active, setActive] = useState(false)
+
+    const dispatch = useDispatch()
+
+    const logout = () => {
+        dispatch(signOut())
+    }
+
+    const toggleActive = (e) => {
+        e.persist()
+        if(active) setActive(false)
+        else setActive(true)
+    }
 
     return (
         <div id="nav">
@@ -18,7 +31,7 @@ function Navigation() {
                 <Link href='/'><li>Home</li></Link>
                 {profile ? null: <Link href='/login'><li>Login</li></Link>}
             </ul>
-            <div className='profile' onClick={()=> setActive(true)}>
+            <div className='profile' onClick={toggleActive}>
                 <h1>Hi, {profile && profile.name}</h1>
                 <img src="/userIcon.png"/>
             </div>
@@ -28,7 +41,10 @@ function Navigation() {
                 top='100px'
                 right='10px'
                 isActive={active}
-                links={[{href: '/admin', title: 'Admin'}, {href: '/myprofile', title: 'My Profile' }]}
+                links={[{href: '/admin', title: 'Admin'}, {href: '/myprofile', title: 'My Profile' }, {action: ()=> {
+                    logout()
+                    setActive(false)
+                }, title: 'Logout'}]}
             />
             <style jsx>{`
                 #nav {
@@ -37,7 +53,7 @@ function Navigation() {
                     left: 0;
                     width: 100%;
                     height: 100px;
-                    background: rgba(255,255,255,.75);
+                    background: rgba(30, 30, 30, .9);
                     backdrop-filter: blur(12px);
                     z-index: 99;
                     box-shadow: ${Theme.sh.mat};
@@ -46,8 +62,10 @@ function Navigation() {
                     position: absolute;
                     top: 0;
                     right: 10px;
-                    width: 200px;
+                    width: 230px;
                     height: 100px;
+                    cursor: pointer;
+                    display: ${profile ? 'block': 'none'};
                 }
                 .profile img {
                     position: absolute;
@@ -59,7 +77,8 @@ function Navigation() {
                 }
                 .profile h1 {
                     float: left;
-                    font: 14px 'Roboto';
+                    font: 15px 'Roboto';
+                    color: white;
                     margin: 0;
                     margin-top: 50px;
                     transform: translate(-60%,-50%);
@@ -74,6 +93,7 @@ function Navigation() {
                     float: left;
                     padding: 10px;
                     list-style: none;
+                    color: white;
                     font: 16px 'Roboto';
                     cursor: pointer;
                 }
@@ -86,6 +106,7 @@ function Navigation() {
                 .title {
                     float: left;
                     font: 38px ${Theme.font.title};
+                    color: white;
                     margin: 15px 2.5px;
                     padding: 10px 2.5px;
                     cursor: pointer;
@@ -138,6 +159,16 @@ function Layout({children}) {
                     margin: 0;
                     width: 100%;
                     height: 100%;
+                }
+                input {
+                    border: 1px solid ${Theme.colors.purple};
+                    box-sizing: border-box;
+                    transition: all .3s ease;
+                }
+                input:focus {
+                    outline: none;
+                    border: 2px solid #f5d9fc;
+                    box-shadow: ${Theme.sh.glow}, ${Theme.sh.glowinset};
                 }
             `}</style>
         </div>

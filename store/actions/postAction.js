@@ -30,3 +30,12 @@ export const signIn = (email, password) => async dispatch => {
     })
     await Router.push('/')
 }
+
+export const signOut = () => async dispatch => {
+    cookies.remove('user')
+    cookies.remove('auth')
+    dispatch({
+        type: types.LOGOUT,
+        payload: null
+    })
+}
