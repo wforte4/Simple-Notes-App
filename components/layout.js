@@ -65,7 +65,7 @@ function Navigation() {
                     width: 230px;
                     height: 100px;
                     cursor: pointer;
-                    display: ${profile ? 'block': 'none'};
+                    display: ${profile == null ? 'none': 'block'};
                 }
                 .profile img {
                     position: absolute;
