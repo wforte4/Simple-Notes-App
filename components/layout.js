@@ -2,11 +2,11 @@ import Theme from '../styles/theme'
 import Head from "next/head";
 import Link from 'next/link'
 import { useDispatch, useSelector } from 'react-redux';
-import { DropDown } from '../components/elements'
+import { DropDown, ToggleSwitch } from '../components/elements'
 import { useState } from 'react'
 import { signOut } from '../store/actions/postAction'
 
-function Navigation() {
+function Navigation({themeColor, setTheme}) {
 
     const {profile} = useSelector(state => state.post)
     const [active, setActive] = useState(false)
@@ -23,6 +23,14 @@ function Navigation() {
         else setActive(true)
     }
 
+    const toggleTheme = (e) => {
+        e.persist()
+        if(themeColor === '#ffffff') setTheme(Theme.colors.dark)
+        else setTheme('#ffffff')
+    }
+
+    console.log(themeColor)
+
     return (
         <div id="nav">
             <img src='/mainicon.png' className='logo'/>
@@ -32,7 +40,7 @@ function Navigation() {
                 {profile ? null: <Link href='/login'><li>Login</li></Link>}
             </ul>
             <div className='profile' onClick={toggleActive}>
-                <h1>Hi, {profile && profile.name}</h1>
+                <h1>{profile && profile.name}</h1>
                 <img src="/userIcon.png"/>
             </div>
             <DropDown
@@ -41,11 +49,22 @@ function Navigation() {
                 top='100px'
                 right='10px'
                 isActive={active}
-                links={[{href: '/admin', title: 'Admin'}, {href: '/myprofile', title: 'My Profile' }, {action: ()=> {
-                    logout()
-                    setActive(false)
-                }, title: 'Logout'}]}
-            />
+                background={themeColor}
+                links={[
+                    {href: '/admin', title: 'Admin'}, 
+                    {href: '/dashboard', title: 'Dashboard'},
+                    {href: '/myprofile', title: 'My Profile' }, 
+                    {action: ()=> {
+                        logout()
+                        setActive(false)
+                    }, title: 'Logout'}
+                ]}
+            >
+                <div className='toggletheme'>
+                    <h2>{themeColor === '#ffffff' ? 'Light': 'Dark'}</h2>
+                    <ToggleSwitch top='18px' right='30px' margin={'10px'} active={themeColor === '#ffffff' ? true: false} onClick={toggleTheme}/>
+                </div>
+            </DropDown>
             <style jsx>{`
                 #nav {
                     position: fixed;
@@ -53,10 +72,24 @@ function Navigation() {
                     left: 0;
                     width: 100%;
                     height: 100px;
-                    background: rgba(30, 30, 30, .9);
+                    transition: all .3s ease;
+                    background: ${themeColor === '#ffffff' ? 'rgba(255,255,255,.9)': 'rgba(20,20,20,.9)'};
                     backdrop-filter: blur(12px);
                     z-index: 99;
                     box-shadow: ${Theme.sh.mat};
+                }
+                .toggletheme {
+                    float: left;
+                    width: 100%;
+                    position: relative;
+                    box-shadow: ${Theme.sh.mat};
+                    padding: 10px 0;
+                }
+                .toggletheme h2 {
+                    float: left;
+                    font: 16px 'Roboto';
+                    margin: 10px 30px;
+                    color: ${themeColor === '#ffffff' ? Theme.colors.dark: 'white'};
                 }
                 .profile {
                     position: absolute;
@@ -65,7 +98,7 @@ function Navigation() {
                     width: 230px;
                     height: 100px;
                     cursor: pointer;
-                    display: ${profile == null ? 'none': 'block'};
+                    opacity: ${profile === null ? '0': '1'};
                 }
                 .profile img {
                     position: absolute;
@@ -78,7 +111,7 @@ function Navigation() {
                 .profile h1 {
                     float: left;
                     font: 15px 'Roboto';
-                    color: white;
+                    color: ${themeColor === '#ffffff' ? Theme.colors.dark: 'white'};
                     margin: 0;
                     margin-top: 50px;
                     transform: translate(-60%,-50%);
@@ -93,7 +126,7 @@ function Navigation() {
                     float: left;
                     padding: 10px;
                     list-style: none;
-                    color: white;
+                    color: ${themeColor === '#ffffff' ? Theme.colors.dark: 'white'};
                     font: 16px 'Roboto';
                     cursor: pointer;
                 }
@@ -106,7 +139,7 @@ function Navigation() {
                 .title {
                     float: left;
                     font: 38px ${Theme.font.title};
-                    color: white;
+                    color: ${themeColor === '#ffffff' ? Theme.colors.dark: 'white'};
                     margin: 15px 2.5px;
                     padding: 10px 2.5px;
                     cursor: pointer;
@@ -126,15 +159,79 @@ function Navigation() {
     )
 }
 
-function Layout({children}) {
+function Footer({themeColor}) {
+    return (
+        <div id="footer">
+
+            <img src='/mainicon.png' className='logo'/>
+            <Link href='/'><h1 className="title up">Synapse</h1></Link><Link href='/'><h1 className="title flash">Flash</h1></Link>
+            <div className='bottomBar'>
+                <h2>Copyright SynapseFlash © 2020</h2>
+            </div>
+            <style jsx>{`
+                .bottomBar {
+                    background: ${themeColor === '#ffffff' ? 'grey': 'black'};
+                    min-height: 100px;
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    width: 90%;
+                    padding: 5px 5%;
+                }
+                .bottomBar h2 {
+                    color: white;
+                    float: left;
+                    font: 18px 'Montserrat';
+                    margin: 35px 30px;
+                }
+                .logo {
+                    float: left;
+                    width: 70px;
+                    height: 70px;
+                    padding: 15px;
+                }
+                .title {
+                    float: left;
+                    font: 38px ${Theme.font.title};
+                    color: ${themeColor === '#ffffff' ? Theme.colors.dark: 'white'};
+                    margin: 15px 2.5px;
+                    padding: 10px 2.5px;
+                    cursor: pointer;
+                    transition: all .3s ease;
+                }
+                .up:hover {
+                    transform: translateY(-2px);
+                    text-shadow: 0 1px #fff;
+                }
+                .flash {
+                    background: -webkit-linear-gradient(left, ${Theme.colors.pink}, ${Theme.colors.purple}, ${Theme.colors.pinklight});
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                }
+                #footer {
+                    float: left;
+                    position: relative;
+                    width: 100%;
+                    transition: background .3s ease;
+                    background: ${themeColor};
+                    box-shadow: ${Theme.sh.mat};
+                    min-height: 600px;
+                }
+            `}</style>
+        </div>
+    )
+}
+
+function Layout({children, themeColor, setTheme}) {
     return (
         <div id='layout'>
             <Head>
                 <link rel="preconnect" href="https://fonts.gstatic.com"/>
                 <link href="https://fonts.googleapis.com/css2?family=Andika+New+Basic&family=Montserrat:wght@700&family=Roboto:wght@300&display=swap" rel="stylesheet"/>
             </Head>
-            <Navigation></Navigation>
+            <Navigation themeColor={themeColor} setTheme={setTheme}></Navigation>
             {children}
+            <Footer themeColor={themeColor}></Footer>
             <style jsx global>{`
                 #__next {
                     padding: 0;
@@ -159,6 +256,8 @@ function Layout({children}) {
                     margin: 0;
                     width: 100%;
                     height: 100%;
+                    transition: background .3s ease;
+                    background: ${themeColor};
                 }
                 input {
                     border: 1px solid ${Theme.colors.purple};

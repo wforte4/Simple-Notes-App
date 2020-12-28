@@ -4,7 +4,7 @@ import Theme from "../styles/theme";
 import React from 'react'
 import Link from 'next/link'
 
-export function ParallaxBanner({children, image, height, shadow = false}) {
+export function ParallaxBanner({children, image, height, shadow = false, background = 'white'}) {
     const currentScroll = useScroll();
     return (
         <div className='banner'>
@@ -14,6 +14,7 @@ export function ParallaxBanner({children, image, height, shadow = false}) {
                     float: left;
                     width: 100%;
                     height: ${height};
+                    background: ${background};
                     overflow: hidden;
                     position: relative;
                     box-shadow: ${shadow ? Theme.sh.mat: null};
@@ -102,9 +103,10 @@ export const Date = ({datetime}) => {
     return date[0]
 }
 
-export const DropDown = ({width, height, top, right, isActive, links}) => {
+export const DropDown = ({width, height, top, right, isActive, links, children, background}) => {
     return (
         <div className='dropdown'>
+            {children}
             {links && links.map((link, i) => {
                 if(link.href) {
                     return (
@@ -112,7 +114,7 @@ export const DropDown = ({width, height, top, right, isActive, links}) => {
                     )
                 } else {    
                     return (
-                        <h2 onClick={link.action}>{link.title}</h2>
+                        <h2 key={i} onClick={link.action}>{link.title}</h2>
                     )
                 }
             })}
@@ -120,7 +122,7 @@ export const DropDown = ({width, height, top, right, isActive, links}) => {
                 .dropdown {
                     position: absolute;
                     transition: all .3s ease;
-                    background: white;
+                    background: ${background};
                     box-shadow: ${Theme.sh.mat};
                     border-radius: 4px;
                     opacity: ${isActive ? 1: 0};
@@ -135,12 +137,47 @@ export const DropDown = ({width, height, top, right, isActive, links}) => {
                     width: 100%;
                     text-align: center;
                     font: 16px 'Roboto';
+                    color: ${background === '#ffffff' ? Theme.colors.dark: 'white'};
                     cursor: pointer;
                     margin: 0;
                     padding: 10px 0;
                 }
                 .dropdown h2:hover {
                     background: rgba(200,200,200,.4);
+                }
+            `}</style>
+        </div>
+    )
+}
+
+export const ToggleSwitch = ({active, activeColor, onClick, top, right}) => {
+    return (
+        <div className='toggle' onClick={onClick}>
+            <div className='circle'></div>
+            <style jsx>{`
+                .toggle {
+                    position: absolute;
+                    top: ${top};
+                    right: ${right};
+                    transition: all .3s ease;
+                    width: 40px;
+                    height: 20px;
+                    padding: 2px;
+                    background: ${active ? Theme.colors.liiightpink: Theme.colors.purple};
+                    box-shadow: ${Theme.sh.hardmat};
+                    border-radius: 12px;
+                    cursor: pointer;
+                }
+                .circle {
+                    background: white;
+                    box-shadow: ${Theme.sh.hardmat};
+                    transition: all .3s ease;
+                    float: left;
+                    width: 17px;
+                    height: 17px;
+                    margin: 2px;
+                    border-radius: 50%;
+                    margin-left: ${active ? '2px': '50%'};
                 }
             `}</style>
         </div>
