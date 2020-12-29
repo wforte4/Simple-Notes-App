@@ -50,7 +50,7 @@ export async function loginRequest(email, password) {
         return data
     })
     .catch(function(error) {
-        return error
+        return error[0]lsjdf
     });
     return newLogin
 }
