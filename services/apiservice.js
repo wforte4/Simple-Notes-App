@@ -77,6 +77,29 @@ export async function forgotPassword(email) {
     }
 }
 
+export async function changePassword(token, newPassword) {
+    // New Login Data request
+    const newLogin = await fetch(baseConfig.baseURL + '/users/changepassword/' + newPassword, {
+        method: 'GET',
+        headers: {
+            "Content-type": "application/json",
+            "Authorization": `Bearer ${token}`
+        }
+    })
+    .then(function(response) {
+        return response.json();
+    })
+    .then(function(data) {
+        return data
+    })
+    .catch(function(error) {
+        return error
+    });
+    if(newLogin) {
+        return newLogin
+    }
+}
+
 export async function submitContact(name, message, email, cellphone) {
     // Request data to post to createprofile route on rest api
     const newfetch = await fetch(baseConfig.baseURL + '/contact', {

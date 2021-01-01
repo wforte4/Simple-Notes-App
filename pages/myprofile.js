@@ -10,22 +10,17 @@ function MyProfile({themeColor}) {
             <img className='userIcon' src="/userIcon.png"/>
             <h1>{profile && profile.name}</h1>
             <ul>
-                <div className='break'>
-                    <label>Email: </label>
-                    <li>{profile && profile.email}</li>
-                </div>
-                <div className='break'>
-                    <label>Full Name: </label>
-                    <li>{profile && profile.name}</li>
-                </div>
-                <div className='break'>
-                    <label>Permission Level: </label>
-                    <li>{profile && profile.permissionLevel}</li>
-                </div>
+                <div className='break'></div>
+                <label>Email: </label>
+                <li>{profile && profile.email}</li>
+                <div className='break'></div>
+                <label>Full Name: </label>
+                <li>{profile && profile.name}</li>
+                <div className='break'></div>
+                <label>Permission Level: </label>
+                <li>{profile && profile.permissionLevel}</li>
             </ul>
-            <div className='break'>
                 <Link href='/forgotpassword'><h2>Forgot Password</h2></Link>
-            </div>
             <style jsx>{`
                 .profile {
                     float: left;
@@ -59,8 +54,9 @@ function MyProfile({themeColor}) {
                     margin: 5px 0;
                 }
                 ul {
-                    padding: 10px 5px;
+                    padding: 10px 5%;
                     float: left;
+                    width: 90%;
                 }
                 ul li {
                     list-style: none;
@@ -73,7 +69,6 @@ function MyProfile({themeColor}) {
                     float: left;
                     margin: 12px 5px;
                     font: 14px 'Roboto';
-                    border-bottom: 1px solid blue;
                 }
                 h2 {
                     float: left;

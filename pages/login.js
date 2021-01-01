@@ -2,7 +2,7 @@ import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { signIn } from "../store/actions/postAction"
 import Theme from "../styles/theme"
-
+import Link from 'next/link'
 
 function Login({themeColor}) {
 
@@ -53,6 +53,7 @@ function Login({themeColor}) {
                 />
                 {errorMessage && <p className='info'>{errorMessage}</p>}
                 <button type='submit'>Login</button>
+                <Link href='/forgotpassword'><div className='link'>Forgot Password?</div></Link>
             </form>
             <style jsx>{`
                 form {
@@ -83,7 +84,6 @@ function Login({themeColor}) {
                     padding: 8px 5%;
                     margin: 10px 5%;
                     font: 15px 'Roboto';
-                    border-radius: 10px;
                 }
                 button {
                     float: left;
@@ -92,13 +92,9 @@ function Login({themeColor}) {
                     margin: 5px 5%;
                     margin-top: 40px;
                     border: none;
-                    border-radius: 8px;
                     box-shadow: ${Theme.sh.mat};
                     cursor: pointer;
                     font: 16px 'Roboto';
-                }
-                button:hover {
-                    background: grey;
                 }
                 form img {
                     float: left;

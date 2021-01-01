@@ -1,6 +1,7 @@
 import Theme from "../styles/theme"
 import { useState } from 'react'
-import { forgotPassword } from '../services/apiservice'
+import { changePassword } from '../services/apiservice'
+import Link from 'next/link'
 
 function ChangePassword({auth}) {
 
@@ -9,6 +10,7 @@ function ChangePassword({auth}) {
         confirmpass: ''
     })
     const [loading, setLoading] = useState(false)
+    const [confirmation, setConfirmation] = useState(false)
     const [error, setError] = useState(null)
 
     const handleType = (e) => {
@@ -22,10 +24,11 @@ function ChangePassword({auth}) {
     const handleSubmit = async (e) => {
         e.preventDefault()
         setLoading(true)
-        if(newpass === confirmpass) {
-            const response = await changePassword(token, newpass)
+        if(inputs.newpass === inputs.confirmpass) {
+            const response = await changePassword(auth, inputs.newpass)
             console.log(response)
-            setLoading('response')
+            setLoading(false)
+            setConfirmation(true)
         } else {
             setLoading(false)
             setError('Passwords do not match')
@@ -35,8 +38,8 @@ function ChangePassword({auth}) {
     return (
         <div className='forgotpass'>
             <div className='center'>
-                <h1>Forgot Password</h1>
-                <form onSubmit={handleSubmit}>
+                <h1>Change Password</h1>
+                {!loading || !confirmation && <form onSubmit={handleSubmit}>
                     <input
                         name='newpass'
                         type='password'
@@ -55,8 +58,10 @@ function ChangePassword({auth}) {
                     />
                     {error ? <div className='info'>{error}</div>: null}
                     <button type='submit'>Change Pass</button>
-                </form>
+                </form>}
                 <img className='loader' src='/loader.gif'/>
+                {confirmation && <div className='confirmation'>Your password has successfully been changed!</div>}
+                {confirmation && <Link href='/login'><div className='link'>Go to login</div></Link>}
             </div>
             <style jsx>{`
                 .forgotpass {

@@ -14,6 +14,11 @@
     "static/development/_ssgManifest.js"
   ],
   "pages": {
+    "/": [
+      "static/chunks/main.js",
+      "static/chunks/webpack.js",
+      "static/chunks/pages/index.js"
+    ],
     "/_app": [
       "static/chunks/main.js",
       "static/chunks/webpack.js",
@@ -29,10 +34,10 @@
       "static/chunks/webpack.js",
       "static/chunks/pages/changepassword.js"
     ],
-    "/forgotpassword": [
+    "/login": [
       "static/chunks/main.js",
       "static/chunks/webpack.js",
-      "static/chunks/pages/forgotpassword.js"
+      "static/chunks/pages/login.js"
     ]
   },
   "ampFirstPages": []

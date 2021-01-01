@@ -43,10 +43,10 @@ function Navigation({themeColor, setTheme}) {
                 <Link href='/'><li>Home</li></Link>
                 {profile ? null: <Link href='/login'><li>Login</li></Link>}
             </ul>
-            <div className='profile' onClick={toggleActive}>
+            {profile && <div className='profile' onClick={toggleActive}>
                 <h1>{profile && profile.name}</h1>
                 <img src="/userIcon.png"/>
-            </div>
+            </div>}
             <DropDown
                 width='200px'
                 height='auto'
@@ -55,7 +55,6 @@ function Navigation({themeColor, setTheme}) {
                 isActive={active}
                 background={themeColor}
                 links={[
-                    {href: '/admin', title: 'Admin'}, 
                     {href: '/dashboard', title: 'Dashboard'},
                     {href: '/myprofile', title: 'My Profile' }, 
                     {action: ()=> {
@@ -102,7 +101,6 @@ function Navigation({themeColor, setTheme}) {
                     width: 230px;
                     height: 100px;
                     cursor: pointer;
-                    opacity: ${profile === null ? '0': '1'};
                 }
                 .profile img {
                     position: absolute;
@@ -272,6 +270,10 @@ function Layout({children, themeColor, setTheme}) {
                     border-radius: 4px;
                     transition: all .3s ease;
                 }
+                button:hover {
+                    background: ${Theme.colors.dark};
+                    color: white;
+                }
                 button:focus {
                     outline: none;
                     box-sizing: border-box;
@@ -312,6 +314,14 @@ function Layout({children, themeColor, setTheme}) {
                     height: 2px;
                     margin: 5px 0;
                     background: linear-gradient(to right, ${Theme.colors.pink}, ${Theme.colors.purple}, ${Theme.colors.pinklight});
+                }
+                .link {
+                    cursor: pointer;
+                    font: 16px 'Roboto';
+                    padding: 5px;
+                    background: -webkit-linear-gradient(left, ${Theme.colors.pink}, ${Theme.colors.purple}, ${Theme.colors.pinklight});
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
                 }
             `}</style>
         </div>

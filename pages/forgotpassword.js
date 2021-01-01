@@ -8,6 +8,7 @@ function ForgotPassword() {
         email: ''
     })
     const [loading, setLoading] = useState(false)
+    const [emailsent, setSent] = useState(false)
     const [error, setError] = useState(null)
 
     const handleType = (e) => {
@@ -23,7 +24,8 @@ function ForgotPassword() {
         setLoading(true)
         const response = await forgotPassword(inputs.email)
         console.log(response)
-        setLoading('response')
+        setLoading(false)
+        setSent(true)
     }
 
     return (
@@ -43,6 +45,7 @@ function ForgotPassword() {
                     <button type='submit'>Submit</button>
                 </form>
                 <img className='loader' src='/loader.gif'/>
+                <div className='res'>Check your email for confirmation</div>
             </div>
             <style jsx>{`
                 .forgotpass {
@@ -79,7 +82,7 @@ function ForgotPassword() {
                     min-width: 250px;
                 }
                 form {
-                    display: ${loading == false ? 'block': 'none'};
+                    display: ${loading == false && emailsent == false ? 'block': 'none'};
                 }
                 .loader {
                     float: left;
@@ -92,8 +95,9 @@ function ForgotPassword() {
                     float: left;
                     font: 16px 'Roboto';
                     width: 90%;
-
-                    display: ${loading === 'response' ? 'block': 'none'};
+                    margin: 25px 0;
+                    text-align: center;
+                    display: ${emailsent == true ? 'block': 'none'};
                 }
             `}</style>
         </div>

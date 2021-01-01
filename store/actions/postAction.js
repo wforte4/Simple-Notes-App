@@ -13,7 +13,7 @@ export const fetchThoughts = (email, auth) => async dispatch => {
     console.log(res)
     dispatch({
         type: types.GET_THOUGHTS,
-        payload: res
+        payload: res.length > 0 ? res: null
     })
 }
 
