@@ -1,16 +1,19 @@
 import { useState } from "react"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { signIn } from "../store/actions/postAction"
 import Theme from "../styles/theme"
 
 
-function Login() {
+function Login({themeColor}) {
 
     const [inputs, setInputs] = useState({
         email: '',
         password: ''
     })
     const dispatch = useDispatch()
+    const {errorMessage} = useSelector(state => state.post)
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState(null)
 
     const handleType = (e) => {
         e.persist()
@@ -20,9 +23,12 @@ function Login() {
         })
     }
 
-    const submitForm = (e) => {
+    const submitForm = async (e) => {
         e.preventDefault()
-        dispatch(signIn(inputs.email, inputs.password))
+        setLoading(true)
+        await dispatch(signIn(inputs.email, inputs.password))
+        setLoading(false)
+
     }
 
     return (
@@ -45,6 +51,7 @@ function Login() {
                     placeholder='Password'
                     required
                 />
+                {errorMessage && <p className='info'>{errorMessage}</p>}
                 <button type='submit'>Login</button>
             </form>
             <style jsx>{`
@@ -60,10 +67,15 @@ function Login() {
                     justify-content: center;
                     align-items: center;
                     transform: translate(-50%,-50%);
-                    background: rgba(30, 30, 30, .9);
+                    background: ${themeColor === '#ffffff' ? 'rgba(255,255,255,.9)': 'rgba(20,20,20,.9)'};
                     backdrop-filter: blur(15px);
                     border-radius: 22px;
                     box-shadow: ${Theme.sh.mat};
+                }
+                .info {
+                    float: left;
+                    font: 16px 'Roboto';
+                    color: red;
                 }
                 input {
                     float: left;
@@ -76,19 +88,23 @@ function Login() {
                 button {
                     float: left;
                     width: 80%;
-                    padding: 5px 5%;
+                    padding: 10px 5%;
                     margin: 5px 5%;
                     margin-top: 40px;
                     border: none;
+                    border-radius: 8px;
                     box-shadow: ${Theme.sh.mat};
                     cursor: pointer;
-                    font: 15px 'Roboto';
+                    font: 16px 'Roboto';
+                }
+                button:hover {
+                    background: grey;
                 }
                 form img {
                     float: left;
                     width: 80px;
                     height: 80px;
-                    margin: 20px 0;
+                    margin: 40px 0;
                     margin-top: -10px;
                 }
                 #body {
@@ -96,7 +112,6 @@ function Login() {
                     width: 100%;
                     height: 100%;
                     position: relative;
-                    background: ${Theme.colors.dark};
                 }
                 #bgbody {
                     position: absolute;

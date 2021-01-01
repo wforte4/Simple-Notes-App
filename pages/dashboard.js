@@ -1,16 +1,23 @@
-import { useState } from "react"
-import { useSelector } from "react-redux"
+import { useState, useEffect } from "react"
+import { useSelector, useDispatch } from "react-redux"
 import Theme from '../styles/theme'
 import { uploadThought } from '../services/thoughtservice'
+import { fetchThoughts } from "../store/actions/postAction"
 
 
 function Dashboard({themeColor}) {
 
-    const {profile} = useSelector(state => state.post)
+    const {profile, auth, thoughts} = useSelector(state => state.post)
+    const dispatch = useDispatch()
     const [inputs, setInputs] = useState({
         thought: '', 
-        user: profile && profile.email
+        user: profile,
+        auth: auth
     })
+
+    useEffect(() => {
+        dispatch(fetchThoughts(profile.email, auth))
+    }, [])
 
     const handleType = (e) => {
         e.persist()
@@ -20,9 +27,11 @@ function Dashboard({themeColor}) {
         })
     }
 
-    const uploadNewThought = (e) => {
+    const uploadNewThought = async (e) => {
         e.preventDefault()
-        const newThought = uploadThought(inputs.thought, inputs.user)
+        setInputs({...inputs, thought: ''})
+        const newThought = await uploadThought(inputs.thought, profile.email, "normal", auth)
+        if(newThought) console.log(newThought)
     }
 
     return (
@@ -44,8 +53,9 @@ function Dashboard({themeColor}) {
                     </div>
                 </div>
             </div>
-            <div className='uploadthought'>
+            <div className='uploadThought'>
                 <h1>Upload New Thought</h1>
+                <div className='break'></div>
                 <form onSubmit={uploadNewThought}>
                     <label>Thought</label>
                     <textarea
@@ -57,7 +67,38 @@ function Dashboard({themeColor}) {
                     <button type='submit'>Upload Thought</button>
                 </form>
             </div>
+            <div className='uploadThought'>
+                <h1>Thought History</h1>
+                <div className='break'></div>
+                <div className='thoughtContainer'>
+                    {thoughts && thoughts.map((thought, i) => {
+                        return (
+                            <div className='thought'>
+                                <h2>{thought.thought}</h2>
+                                <h3>{thought.mindset}</h3>
+                            </div>
+                        )
+                    })}
+                </div>
+            </div>
             <style jsx>{`
+                .thought {
+                    float: left;
+                    width: 90%;
+                    margin: 10px 5%;
+                    display: flex;
+                    flex-flow: column no-wrap;
+                }
+                .thought h2 {
+                    width: 45%;
+                    text-align: center;
+                    font: 20px 'Roboto';
+                }
+                .thought h3 {
+                    width: 45%;
+                    text-align: center;
+                    font: 16px 'Roboto';
+                }
                 .list {
                     float: left;
                     width: 100%;
@@ -70,7 +111,7 @@ function Dashboard({themeColor}) {
                     position: relative;
                 }
                 .item img {
-                    max-width: 80px;
+                    max-width: 45px;
                 }
                 .item .frame {
                     position: absolute;
@@ -99,26 +140,30 @@ function Dashboard({themeColor}) {
                     color: ${themeColor === '#ffffff' ? Theme.colors.dark: 'white'};
                     transform: translate(-50%);
                 }
-                .uploadthought {
+                .uploadThought {
                     float: left;
                     width: 90%;
                     margin: 30px 5%;
                     border-radius: 4px;
                     box-shadow: ${Theme.sh.mat};
                 }
-                .uploadthought form {
+                .uploadThought form {
                     float: left;
                     width: 90%;
                     padding: 30px 5%;
                 }
-                .uploadthought label {
+                .uploadThought label {
                     float: left;
                     margin: 10px 0;
                     color: ${themeColor === '#ffffff' ? Theme.colors.dark: 'white'};
                     border-bottom: 1px solid blue;
                     font: 16px 'Roboto';
                 }
-                .uploadthought textarea {
+                .uploadThought button {
+                    float: left;
+                    margin: 20px 0;
+                }
+                .uploadThought textarea {
                     float: left;
                     width: 95%;
                     padding: 25px 2.5%;
@@ -127,7 +172,7 @@ function Dashboard({themeColor}) {
                     resize: vertical;
                     font: 16px 'Roboto';
                 }
-                .uploadthought h1 {
+                .uploadThought h1 {
                     float: left;
                     color: ${themeColor === '#ffffff' ? Theme.colors.dark: 'white'};
                     font: 32px 'Montserrat';

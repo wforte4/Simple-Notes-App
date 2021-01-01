@@ -6,16 +6,6 @@ import Theme from '../styles/theme'
 
 function Index({themeColor}) {
 
-    const dispatch = useDispatch()
-
-    const {projects} = useSelector(state => state.post)
-
-    useEffect(() => {
-        dispatch(fetchProjects())
-    }, [])
-
-    console.log(themeColor)
-
 
     return (
         <div>

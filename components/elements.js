@@ -100,7 +100,8 @@ export function getDate(datetime) {
 
 export const Date = ({datetime}) => {
     const date = datetime.split('T')
-    return date[0]
+    const time = date.split('Z')
+    return date[0], time[0]
 }
 
 export const DropDown = ({width, height, top, right, isActive, links, children, background}) => {

@@ -1,17 +1,23 @@
 import Theme from '../styles/theme'
 import Head from "next/head";
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux';
 import { DropDown, ToggleSwitch } from '../components/elements'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { signOut } from '../store/actions/postAction'
 
 function Navigation({themeColor, setTheme}) {
 
     const {profile} = useSelector(state => state.post)
     const [active, setActive] = useState(false)
+    const router = useRouter()
 
     const dispatch = useDispatch()
+
+    useEffect(() => {
+        if(active == true) setActive(false)
+    }, [router.pathname])
 
     const logout = () => {
         dispatch(signOut())
@@ -28,8 +34,6 @@ function Navigation({themeColor, setTheme}) {
         if(themeColor === '#ffffff') setTheme(Theme.colors.dark)
         else setTheme('#ffffff')
     }
-
-    console.log(themeColor)
 
     return (
         <div id="nav">
@@ -250,6 +254,7 @@ function Layout({children, themeColor, setTheme}) {
                     width: 100%;
                     height: 100%;
                     float: left;
+                    color: ${themeColor === '#ffffff' ? 'black': 'white'};
                 }
                 body {
                     padding: 0;
@@ -259,15 +264,54 @@ function Layout({children, themeColor, setTheme}) {
                     transition: background .3s ease;
                     background: ${themeColor};
                 }
+                button {
+                    border: none;
+                    padding: 10px;
+                    font: 16px 'Roboto';
+                    cursor: pointer;
+                    border-radius: 4px;
+                    transition: all .3s ease;
+                }
+                button:focus {
+                    outline: none;
+                    box-sizing: border-box;
+                    border: 1px solid #f5d9fc;
+                    box-shadow: ${Theme.sh.glow}, ${Theme.sh.glowinset};
+                }
                 input {
                     border: 1px solid ${Theme.colors.purple};
                     box-sizing: border-box;
+                    padding: 10px 5px;
+                    border-radius: 4px;
+                    font: 15px 'Roboto';
+                    color: ${themeColor === '#ffffff' ? 'black': 'white'};
+                    background: ${themeColor};
                     transition: all .3s ease;
                 }
-                input:focus {
+                input:focus, textarea:focus {
                     outline: none;
-                    border: 2px solid #f5d9fc;
+                    box-sizing: border-box;
+                    border: 1px solid #f5d9fc;
                     box-shadow: ${Theme.sh.glow}, ${Theme.sh.glowinset};
+                    background: none;
+                }
+                textarea {
+                    border: 1px solid ${Theme.colors.purple};
+                    box-sizing: border-box;
+                    padding: 10px 5px;
+                    border-radius: 4px;
+                    font: 15px 'Roboto';
+                    min-height: 250px;
+                    color: ${themeColor === '#ffffff' ? 'black': 'white'};
+                    background: ${themeColor};
+                    transition: all .3s ease;
+                }
+                .break {
+                    float: left;
+                    width: 100%;
+                    height: 2px;
+                    margin: 5px 0;
+                    background: linear-gradient(to right, ${Theme.colors.pink}, ${Theme.colors.purple}, ${Theme.colors.pinklight});
                 }
             `}</style>
         </div>

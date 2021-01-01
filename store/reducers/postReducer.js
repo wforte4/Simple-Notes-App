@@ -4,21 +4,22 @@ import { Cookies } from 'react-cookie'
 const cookies = new Cookies()
 
 const initialState = { 
-    projects: [],
+    thoughts: [],
     profile: cookies.get('user'),
     auth: cookies.get('auth'),
     post: {},
     loading: false,
-    error: null
+    error: null,
+    errorMessage: null
 }
 
 export const postReducer = (state = initialState, action) => {
 
     switch(action.type) {
-        case types.GET_PROJECTS:
+        case types.GET_THOUGHTS:
             return {
                 ...state,
-                projects: action.payload,
+                thoughts: action.payload,
                 loading: false,
                 error: null
             }
@@ -34,7 +35,7 @@ export const postReducer = (state = initialState, action) => {
                 ...state,
                 auth: action.payload,
                 loading: false,
-                eror: null
+                error: null
             }
         case types.LOGOUT:
             return {
@@ -42,7 +43,14 @@ export const postReducer = (state = initialState, action) => {
                 profile: action.payload,
                 auth: action.payload,
                 loading: false,
-                eror: null
+                error: null
+            }
+        case types.FAILEDLOGIN:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload,
+                errorMessage: action.errorMessage
             }
         default:
             return state

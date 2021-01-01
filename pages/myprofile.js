@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { useSelector } from 'react-redux';
 import Theme from '../styles/theme'
 
-function MyProfile() {
+function MyProfile({themeColor}) {
     const {profile} = useSelector(state => state.post)
 
     return (
@@ -13,6 +13,10 @@ function MyProfile() {
                 <div className='break'>
                     <label>Email: </label>
                     <li>{profile && profile.email}</li>
+                </div>
+                <div className='break'>
+                    <label>Full Name: </label>
+                    <li>{profile && profile.name}</li>
                 </div>
                 <div className='break'>
                     <label>Permission Level: </label>
@@ -26,11 +30,11 @@ function MyProfile() {
                 .profile {
                     float: left;
                     width: 80%;
-                    margin: 10px 5%;
+                    margin: 40px 5%;
                     padding: 10px 5%;
                     min-height: 200px;
-                    background: white;
-                    margin-top: 120px;
+                    background: ${themeColor};
+                    margin-top: 140px;
                     box-shadow: ${Theme.sh.mat};
                     border-radius: 4px;
                 }

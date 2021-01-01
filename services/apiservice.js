@@ -43,27 +43,38 @@ export async function loginRequest(email, password) {
         })
     })
     .then(function(response) {
+        if(response.status == 400) return response.status
         return response.json();
     })
     .then(function(data) {
-        console.log(data)
         return data
     })
     .catch(function(error) {
-        return error[0]
+        return error
     });
     return newLogin
 }
 
-export async function Logout() {
-    cookies.remove('accessToken');
-    cookies.remove('permission_level')
-    cookies.remove('refreshToken');
-    cookies.remove('name')
-    cookies.remove('email')
-    cookies.remove('refreshKey')
-    cookies.remove('userId')
-    await Router.push("/login");
+export async function forgotPassword(email) {
+    // New Login Data request
+    const newLogin = await fetch(baseConfig.baseURL + '/users/forgotpass/' + email, {
+        method: 'GET',
+        headers: {
+            "Content-type": "application/json"
+        }
+    })
+    .then(function(response) {
+        return response.json();
+    })
+    .then(function(data) {
+        return data
+    })
+    .catch(function(error) {
+        return error
+    });
+    if(newLogin) {
+        return newLogin
+    }
 }
 
 export async function submitContact(name, message, email, cellphone) {
