@@ -78,6 +78,9 @@ export const Col = ({padding, children, background, margin, width, height, mobil
                     background: ${background};
                     min-height: 200px;
                     height: ${height};
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
                 }
                 @media only screen and (max-width: 650px) {
                     .col {

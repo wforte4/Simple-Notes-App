@@ -171,20 +171,52 @@ function Footer({themeColor, show, profile}) {
 
             <img src='/mainicon.png' className='logo'/>
             <Link href='/'><h1 className="title up">Synapse</h1></Link><Link href='/'><h1 className="title flash">Flash</h1></Link>
-            <Row height='500px'>
+            <Row height='350px'>
                 <Col>
                     <ul className='navLinks'>
+                        <h2>Navigation</h2>
                         <Link href='/'><li>Home</li></Link>
                         {profile ? null: <Link href='/login'><li>Login</li></Link>}
                         {profile ? null: <Link href='/createprofile'><li>Create Profile</li></Link>}
                     </ul>
                 </Col>
-                <Col></Col>
+                <Col>
+                    <ul className='navLinks'>
+                        <h2>Social Media</h2>
+                        <Link href='/'><li>Facebook</li></Link>
+                        <Link href='/login'><li>Instagram</li></Link>
+                        <Link href='/createprofile'><li>Snap Chat</li></Link>
+                    </ul>
+                </Col>
             </Row>
             <div className='bottomBar'>
                 <h2>Copyright SynapseFlash © 2020</h2>
             </div>
             <style jsx>{`
+                .navLinks {
+                    padding: 0;
+                    width: 200px;
+                }
+                .navLinks h2 {
+                    float: left;
+                    width: 100%;
+                    text-align: center;
+                    font: 18px ${Theme.font.title};
+                }
+                .navLinks li {
+                    float: left;
+                    list-style: none;
+                    width: 100%;
+                    text-align: center;
+                    padding: 5px 0;
+                    cursor: pointer;
+                    opacity: .8;
+                    transition: all .3s ease;
+                    font: 16px ${Theme.font.style};
+                }
+                .navLinks li:hover {
+                    opacity: 1;
+                }
                 .bottomBar {
                     background: ${themeColor === '#ffffff' ? 'grey': 'black'};
                     min-height: 100px;
@@ -251,6 +283,7 @@ function Layout({children, themeColor, setTheme, router, profile}) {
         <div id='layout'>
             <Head>
                 <link rel="preconnect" href="https://fonts.gstatic.com"/>
+                <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300&display=swap" rel="stylesheet"/>
                 <link href="https://fonts.googleapis.com/css2?family=Andika+New+Basic&family=Montserrat:wght@700&family=Roboto:wght@300&display=swap" rel="stylesheet"/>
             </Head>
             <Navigation profile={profile} show={showLayout} themeColor={themeColor} setTheme={setTheme}></Navigation>

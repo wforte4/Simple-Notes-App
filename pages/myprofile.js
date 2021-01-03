@@ -82,7 +82,7 @@ function MyProfile({themeColor}) {
                     <button type='submit'>Save Changes</button>
                 </When>
             </form>
-                <Link href='/forgotpassword'><h2>Forgot Password</h2></Link>
+            <Link href='/forgotpassword'><h2>Forgot Password</h2></Link>
             <style jsx>{`
                 .section {
                     float: left;
@@ -101,7 +101,6 @@ function MyProfile({themeColor}) {
                     margin: 40px 5%;
                     padding: 10px 5%;
                     min-height: 200px;
-                    background: ${themeColor};
                     margin-top: 140px;
                     box-shadow: ${Theme.sh.mat};
                     border-radius: 4px;
@@ -128,6 +127,7 @@ function MyProfile({themeColor}) {
                 }
                 form {
                     padding: 10px 5%;
+                    margin: 30px 0;
                     float: left;
                     width: 90%;
                 }
@@ -148,13 +148,13 @@ function MyProfile({themeColor}) {
                 }
                 h2 {
                     float: left;
-                    font: 16px 'Montserrat';
+                    font: 16px 'Roboto';
                     border-radius: 4px;
                     cursor: pointer;
                     box-shadow: ${Theme.sh.mat};
                     background: ${Theme.colors.pink};
                     color: white;
-                    padding: 10px;
+                    padding: 8px;
                     margin: 10px 5px;
                 }
             `}</style>

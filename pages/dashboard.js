@@ -102,10 +102,12 @@ function Dashboard({themeColor}) {
                     float: left;
                     width: 80%;
                     padding: 25px 2.5%;
+                    box-shadow: none;
+                    border: none;
                     margin: 30px 0;
                     min-height: 150px;
                     resize: vertical;
-                    font: 16px 'Roboto';
+                    font: 15px ${Theme.font.style};
                 }
                 .dash {
                     float: left;

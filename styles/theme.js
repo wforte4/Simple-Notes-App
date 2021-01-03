@@ -6,7 +6,8 @@ const Theme = {
         glow: "0 0 5px #9803ba"
     },
     font: {
-        title: "'Montserrat'"
+        title: "'Montserrat'",
+        style: "'IBM Plex Mono', monospace"
     },
     colors: {
         pink: '#ef32e6',
