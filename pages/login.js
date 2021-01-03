@@ -35,7 +35,7 @@ function Login({themeColor}) {
         <div id="body">
             <img id="bgbody" src="/mainbg.png"/>
             <form onSubmit={submitForm}>
-                <img src="/userIcon.png"/>
+                <img src="/think.png"/>
                 <input
                     name='email'
                     value={inputs.email}
@@ -114,7 +114,6 @@ function Login({themeColor}) {
                     top: 50%;
                     left: 50%;
                     width: 100%;
-                    height: 100%;
                     transform: translate(-50%,-50%);
                 }
             `}</style>

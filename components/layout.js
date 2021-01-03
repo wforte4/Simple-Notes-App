@@ -3,13 +3,13 @@ import Head from "next/head";
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux';
-import { DropDown, ToggleSwitch } from '../components/elements'
+import { DropDown, ToggleSwitch, When, HamburgerEx, Row, Col } from '../components/elements'
 import { useState, useEffect } from 'react'
 import { signOut } from '../store/actions/postAction'
+import { route } from 'next/dist/next-server/server/router';
 
-function Navigation({themeColor, setTheme}) {
+function Navigation({themeColor, setTheme, show, profile}) {
 
-    const {profile} = useSelector(state => state.post)
     const [active, setActive] = useState(false)
     const router = useRouter()
 
@@ -42,11 +42,14 @@ function Navigation({themeColor, setTheme}) {
             <ul className='navLinks'>
                 <Link href='/'><li>Home</li></Link>
                 {profile ? null: <Link href='/login'><li>Login</li></Link>}
+                {profile ? null: <Link href='/createprofile'><li>Create Profile</li></Link>}
             </ul>
-            {profile && <div className='profile' onClick={toggleActive}>
-                <h1>{profile && profile.name}</h1>
-                <img src="/userIcon.png"/>
-            </div>}
+            <When condition={profile}>
+                <div className='profile' onClick={toggleActive}>
+                    <h1>Hi, {profile && profile.firstName}</h1>
+                    <HamburgerEx active={active} top='35px' right='15px' themeColor={themeColor}/>
+                </div>
+            </When>
             <DropDown
                 width='200px'
                 height='auto'
@@ -76,6 +79,7 @@ function Navigation({themeColor, setTheme}) {
                     width: 100%;
                     height: 100px;
                     transition: all .3s ease;
+                    display: ${show == false ? 'none': 'block'};
                     background: ${themeColor === '#ffffff' ? 'rgba(255,255,255,.9)': 'rgba(20,20,20,.9)'};
                     backdrop-filter: blur(12px);
                     z-index: 99;
@@ -161,12 +165,22 @@ function Navigation({themeColor, setTheme}) {
     )
 }
 
-function Footer({themeColor}) {
+function Footer({themeColor, show, profile}) {
     return (
         <div id="footer">
 
             <img src='/mainicon.png' className='logo'/>
             <Link href='/'><h1 className="title up">Synapse</h1></Link><Link href='/'><h1 className="title flash">Flash</h1></Link>
+            <Row height='500px'>
+                <Col>
+                    <ul className='navLinks'>
+                        <Link href='/'><li>Home</li></Link>
+                        {profile ? null: <Link href='/login'><li>Login</li></Link>}
+                        {profile ? null: <Link href='/createprofile'><li>Create Profile</li></Link>}
+                    </ul>
+                </Col>
+                <Col></Col>
+            </Row>
             <div className='bottomBar'>
                 <h2>Copyright SynapseFlash © 2020</h2>
             </div>
@@ -218,22 +232,30 @@ function Footer({themeColor}) {
                     background: ${themeColor};
                     box-shadow: ${Theme.sh.mat};
                     min-height: 600px;
+                    display: ${show == false ? 'none': 'block'};
                 }
             `}</style>
         </div>
     )
 }
 
-function Layout({children, themeColor, setTheme}) {
+function Layout({children, themeColor, setTheme, router, profile}) {
+
+    const [showLayout, setShowLayout] = useState(true)
+    useEffect(() => {
+        if(router.pathname === '/dashboard') setShowLayout(false)
+        else setShowLayout(true)
+    }, [router.pathname])
+
     return (
         <div id='layout'>
             <Head>
                 <link rel="preconnect" href="https://fonts.gstatic.com"/>
                 <link href="https://fonts.googleapis.com/css2?family=Andika+New+Basic&family=Montserrat:wght@700&family=Roboto:wght@300&display=swap" rel="stylesheet"/>
             </Head>
-            <Navigation themeColor={themeColor} setTheme={setTheme}></Navigation>
+            <Navigation profile={profile} show={showLayout} themeColor={themeColor} setTheme={setTheme}></Navigation>
             {children}
-            <Footer themeColor={themeColor}></Footer>
+            <Footer profile={profile} show={showLayout} themeColor={themeColor}></Footer>
             <style jsx global>{`
                 #__next {
                     padding: 0;
@@ -283,7 +305,7 @@ function Layout({children, themeColor, setTheme}) {
                 input {
                     border: 1px solid ${Theme.colors.purple};
                     box-sizing: border-box;
-                    padding: 10px 5px;
+                    padding: 10px 15px;
                     border-radius: 4px;
                     font: 15px 'Roboto';
                     color: ${themeColor === '#ffffff' ? 'black': 'white'};
@@ -318,7 +340,8 @@ function Layout({children, themeColor, setTheme}) {
                 .link {
                     cursor: pointer;
                     font: 16px 'Roboto';
-                    padding: 5px;
+                    padding: 10px;
+                    margin: 5px;
                     background: -webkit-linear-gradient(left, ${Theme.colors.pink}, ${Theme.colors.purple}, ${Theme.colors.pinklight});
                     -webkit-background-clip: text;
                     -webkit-text-fill-color: transparent;

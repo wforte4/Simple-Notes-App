@@ -104,6 +104,16 @@ export const Date = ({datetime}) => {
     return date[0], time[0]
 }
 
+export class When extends React.Component {
+    render() {
+        if(this.props.condition !== null) {
+            return this.props.children
+        } else {
+            return null
+        }
+    }
+}
+
 export const DropDown = ({width, height, top, right, isActive, links, children, background}) => {
     return (
         <div className='dropdown'>
@@ -151,13 +161,14 @@ export const DropDown = ({width, height, top, right, isActive, links, children, 
     )
 }
 
-export const ToggleSwitch = ({active, activeColor, onClick, top, right}) => {
+export const ToggleSwitch = ({active, activeColor, onClick, top, right, floatLeft = false}) => {
     return (
         <div className='toggle' onClick={onClick}>
             <div className='circle'></div>
             <style jsx>{`
                 .toggle {
-                    position: absolute;
+                    float: ${floatLeft ? 'left': ''};
+                    position: ${floatLeft ? 'relative': 'absolute'};
                     top: ${top};
                     right: ${right};
                     transition: all .3s ease;
@@ -184,3 +195,47 @@ export const ToggleSwitch = ({active, activeColor, onClick, top, right}) => {
         </div>
     )
 }
+
+export const HamburgerEx = ({active, activeColor, onClick, top, right, floatLeft = false, themeColor}) => {
+    return (
+        <div className='toggle' onClick={onClick}>
+            <div className='line one'></div>
+            <div className='line two'></div>
+            <div className='line three'></div>
+            <style jsx>{`
+                .toggle {
+                    float: ${floatLeft ? 'left': ''};
+                    position: ${floatLeft ? 'relative': 'absolute'};
+                    top: ${top};
+                    right: ${right};
+                    transition: all .3s ease;
+                    width: 30px;
+                    height: 30px;
+                    cursor: pointer;
+                    display: flex;
+                    justify-content: ${active ? 'center': 'space-evenly'};
+                    flex-flow: column wrap;
+                    align-content: space-evenly;
+                }
+                .line {
+                    background: ${themeColor === '#ffffff' ? Theme.colors.dark: 'white'};
+                    box-shadow: ${Theme.sh.hardmat};
+                    transition: all .3s ease;
+                    float: left;
+                    width: 100%;
+                    height: 1px;
+                }
+                .one {
+                    transform: ${active ? 'rotate(45deg) translateY(1px)': ''};
+                }
+                .two {
+                    opacity: ${active ? '0': '1'};
+                }
+                .three {
+                    transform:  ${active ? 'rotate(-45deg) translateY(-1px)': ''};
+                }
+            `}</style>
+        </div>
+    )
+}
+

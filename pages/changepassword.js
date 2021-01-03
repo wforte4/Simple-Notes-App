@@ -2,6 +2,7 @@ import Theme from "../styles/theme"
 import { useState } from 'react'
 import { changePassword } from '../services/apiservice'
 import Link from 'next/link'
+import { When } from "../components/elements"
 
 function ChangePassword({auth}) {
 
@@ -39,26 +40,28 @@ function ChangePassword({auth}) {
         <div className='forgotpass'>
             <div className='center'>
                 <h1>Change Password</h1>
-                {!loading || !confirmation && <form onSubmit={handleSubmit}>
-                    <input
-                        name='newpass'
-                        type='password'
-                        value={inputs.newpass}
-                        onChange={handleType}
-                        placeholder='New Password'
-                        required
-                    />
-                    <input
-                        name='confirmpass'
-                        type='password'
-                        value={inputs.confirmpass}
-                        onChange={handleType}
-                        placeholder='Confirm Password'
-                        required
-                    />
-                    {error ? <div className='info'>{error}</div>: null}
-                    <button type='submit'>Change Pass</button>
-                </form>}
+                <When condition={!loading && !confirmation}>
+                    <form onSubmit={handleSubmit}>
+                        <input
+                            name='newpass'
+                            type='password'
+                            value={inputs.newpass}
+                            onChange={handleType}
+                            placeholder='New Password'
+                            required
+                        />
+                        <input
+                            name='confirmpass'
+                            type='password'
+                            value={inputs.confirmpass}
+                            onChange={handleType}
+                            placeholder='Confirm Password'
+                            required
+                        />
+                        {error ? <div className='info'>{error}</div>: null}
+                        <button type='submit'>Change Pass</button>
+                    </form>
+                </When>
                 <img className='loader' src='/loader.gif'/>
                 {confirmation && <div className='confirmation'>Your password has successfully been changed!</div>}
                 {confirmation && <Link href='/login'><div className='link'>Go to login</div></Link>}

@@ -1,0 +1,1 @@
+{"ast":null,"code":"// Base Url for the rest api -- Every other directory can be accessed baseURL + \"/%s\";\nconst base = 'http://localhost:3600';\nexport const baseConfig = {\n  baseURL: base,\n  backendImages: base + '/ftp/',\n  thoughtURL: base + '/thoughts/'\n};","map":null,"metadata":{},"sourceType":"module"}

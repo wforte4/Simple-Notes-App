@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux"
 import Theme from '../styles/theme'
 import { uploadThought } from '../services/thoughtservice'
 import { fetchThoughts } from "../store/actions/postAction"
-
+import Link from 'next/link'
 
 function Dashboard({themeColor}) {
 
@@ -36,100 +36,27 @@ function Dashboard({themeColor}) {
 
     return (
         <div className='dash'>
-            <div className='welcome'>
-                <h1>Hello, {profile && profile.name}</h1>
-                <div className='list'>
-                    <div className='item'>
-                        <div className='frame'>
-                            <img src='/uploadCircle.png'/>
-                        </div>
-                        <h2>Upload Thought</h2>
-                    </div>
-                    <div className='item'>
-                        <div className='frame'>
-                            <img src='/history.png'/>
-                        </div>
-                        <h2>Thought History</h2>
-                    </div>
-                </div>
-            </div>
+            <Link href='/'><div className='link'>Back to home</div></Link>
             <div className='uploadThought'>
-                <h1>Upload New Thought</h1>
-                <div className='break'></div>
                 <form onSubmit={uploadNewThought}>
-                    <label>Thought</label>
+                    <label>Start Thinking</label>
+                    <img className='thinklogo' src='/think.png'/>
                     <textarea
                         name='thought'
                         value={inputs.thought}
                         onChange={handleType}
+                        placeholder='Hmm...what am i thinking today?'
                         required
                     />
                     <button type='submit'>Upload Thought</button>
                 </form>
             </div>
-            <div className='uploadThought'>
-                <h1>Thought History</h1>
-                <div className='break'></div>
-                <div className='thoughtContainer'>
-                    {thoughts && thoughts.map((thought, i) => {
-                        return (
-                            <div className='thought'>
-                                <h2>{thought.thought}</h2>
-                                <h3>{thought.mindset}</h3>
-                            </div>
-                        )
-                    })}
-                </div>
-            </div>
             <style jsx>{`
-                .thought {
+                .thinklogo {
                     float: left;
-                    width: 90%;
-                    margin: 10px 5%;
-                    display: flex;
-                    flex-flow: column no-wrap;
-                }
-                .thought h2 {
-                    width: 45%;
-                    text-align: center;
-                    font: 20px 'Roboto';
-                }
-                .thought h3 {
-                    width: 45%;
-                    text-align: center;
-                    font: 16px 'Roboto';
-                }
-                .list {
-                    float: left;
-                    width: 100%;
-                    display: flex;
-                }
-                .item {
-                    float: left;
-                    width: 200px;
-                    height: 200px;
-                    position: relative;
-                }
-                .item img {
-                    max-width: 45px;
-                }
-                .item .frame {
-                    position: absolute;
-                    width: 140px;
-                    height: 140px;
-                    left: 50%;
-                    display: grid;
-                    place-items: center;
-                    transform: translate(-50%);
-                    box-shadow: ${Theme.sh.mat};
-                    border-radius: 5px;
-                    cursor: pointer;
-                    transition: all .3s ease;
-                    background: linear-gradient(to right, ${Theme.colors.pink}, ${Theme.colors.purple}, ${Theme.colors.pinklight});
-                }
-                .item .frame:hover {
-                    transform: translate(-50%, -3px) scale(1.05, 1.05);
-                    box-shadow: ${Theme.sh.hardmat};
+                    width: 60px;
+                    height: 60px;
+                    margin: 10px 0 ;
                 }
                 .item h2 {
                     position: absolute;
@@ -141,61 +68,51 @@ function Dashboard({themeColor}) {
                     transform: translate(-50%);
                 }
                 .uploadThought {
-                    float: left;
-                    width: 90%;
-                    margin: 30px 5%;
+                    width: 70%;
                     border-radius: 4px;
                     box-shadow: ${Theme.sh.mat};
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%,-50%);
                 }
                 .uploadThought form {
                     float: left;
                     width: 90%;
                     padding: 30px 5%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    flex-flow: column wrap;
                 }
                 .uploadThought label {
                     float: left;
-                    margin: 10px 0;
-                    color: ${themeColor === '#ffffff' ? Theme.colors.dark: 'white'};
-                    border-bottom: 1px solid blue;
-                    font: 16px 'Roboto';
+                    margin: 20px 0;
+                    padding: 0;
+                    width: 100%;
+                    text-align: center;
+                    font: 18px 'Montserrat';
                 }
                 .uploadThought button {
                     float: left;
                     margin: 20px 0;
+                    min-width: 20%;
                 }
                 .uploadThought textarea {
                     float: left;
-                    width: 95%;
+                    width: 80%;
                     padding: 25px 2.5%;
-                    margin: 10px 0;
+                    margin: 30px 0;
                     min-height: 150px;
                     resize: vertical;
                     font: 16px 'Roboto';
                 }
-                .uploadThought h1 {
-                    float: left;
-                    color: ${themeColor === '#ffffff' ? Theme.colors.dark: 'white'};
-                    font: 32px 'Montserrat';
-                    padding: 10px 40px;
-                }
-                .welcome {
-                    float: left;
-                    width: 90%;
-                    margin: 30px 5%;
-                    border-radius: 4px;
-                    box-shadow: ${Theme.sh.mat};
-                }
-                .welcome h1 {
-                    float: left;
-                    color: ${themeColor === '#ffffff' ? Theme.colors.dark: 'white'};
-                    font: 32px 'Montserrat';
-                    padding: 20px;
-                }
                 .dash {
                     float: left;
                     width: 100%;
-                    margin-top: 100px;
-                    min-height: 800px;
+                    position: relative;
+                    height: 100%;
+                    overflow-y: hidden;
                 }
             `}</style>
         </div>
