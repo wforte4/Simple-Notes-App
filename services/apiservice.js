@@ -149,4 +149,30 @@ export async function patchUser(userId, token, userData) {
     }
 }
 
+export async function getAllUsers(token, limit) {
+    // New Login Data request
+    const allUsers = await fetch(baseConfig.baseURL + '/users', {
+        method: 'GET',
+        headers: {
+            "Content-type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+        query: JSON.stringify({
+            "limit": limit
+        })
+    })
+    .then(function(response) {
+        return response.json();
+    })
+    .then(function(data) {
+        return data
+    })
+    .catch(function(error) {
+        return error
+    });
+    if(allUsers) {
+        return allUsers
+    }
+}
+
 

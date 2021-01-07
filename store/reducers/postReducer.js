@@ -5,8 +5,9 @@ const cookies = new Cookies()
 
 const initialState = { 
     thoughts: [],
-    profile: cookies.get('user'),
-    auth: cookies.get('auth'),
+    profile: cookies.get('user')||null,
+    auth: cookies.get('auth')||null,
+    allusers: null,
     post: {},
     loading: false,
     error: null,
@@ -28,7 +29,8 @@ export const postReducer = (state = initialState, action) => {
                 ...state,
                 profile: action.payload,
                 loading: false,
-                error: null
+                error: null,
+                errorMessage: null
             }
         case types.AUTH:
             return {
@@ -40,8 +42,8 @@ export const postReducer = (state = initialState, action) => {
         case types.LOGOUT:
             return {
                 ...state,
-                profile: action.payload,
-                auth: action.payload,
+                profile: null,
+                auth: null,
                 loading: false,
                 error: null
             }
@@ -50,6 +52,14 @@ export const postReducer = (state = initialState, action) => {
                 ...state,
                 loading: false,
                 error: action.payload,
+                errorMessage: action.errorMessage
+            }
+        case types.GET_ALLUSERS:
+            return {
+                ...state,
+                loading: false,
+                allusers: action.payload,
+                error: action.error,
                 errorMessage: action.errorMessage
             }
         default:

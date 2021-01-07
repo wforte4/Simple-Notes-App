@@ -64,7 +64,7 @@ export class Row extends React.Component {
     }
 }
 
-export const Col = ({padding, children, background, margin, width, height, mobileDisplay}) => {
+export const Col = ({padding, children, background, margin, width, height, minheight, mobileDisplay}) => {
     return (
         <div className='col'>
             {children}
@@ -76,7 +76,7 @@ export const Col = ({padding, children, background, margin, width, height, mobil
                     padding: ${padding};
                     margin: ${margin};
                     background: ${background};
-                    min-height: 200px;
+                    min-height: ${minheight};
                     height: ${height};
                     display: flex;
                     justify-content: center;
@@ -85,7 +85,7 @@ export const Col = ({padding, children, background, margin, width, height, mobil
                 @media only screen and (max-width: 650px) {
                     .col {
                         width: 100%;
-                        display: ${mobileDisplay == false ? 'none': 'block'};
+                        display: ${mobileDisplay == false ? 'none': 'flex'};
                     }
                 }
             `}</style>
@@ -186,7 +186,7 @@ export const ToggleSwitch = ({active, activeColor, onClick, top, right, floatLef
                 .circle {
                     background: white;
                     box-shadow: ${Theme.sh.hardmat};
-                    transition: all .3s ease;
+                    transition: all .1s ease-in-out;
                     float: left;
                     width: 17px;
                     height: 17px;
@@ -222,7 +222,6 @@ export const HamburgerEx = ({active, activeColor, onClick, top, right, floatLeft
                 }
                 .line {
                     background: ${themeColor === '#ffffff' ? Theme.colors.dark: 'white'};
-                    box-shadow: ${Theme.sh.hardmat};
                     transition: all .3s ease;
                     float: left;
                     width: 100%;

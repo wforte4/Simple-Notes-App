@@ -13,7 +13,6 @@ function Login({themeColor}) {
     const dispatch = useDispatch()
     const {errorMessage} = useSelector(state => state.post)
     const [loading, setLoading] = useState(false)
-    const [error, setError] = useState(null)
 
     const handleType = (e) => {
         e.persist()
@@ -28,7 +27,6 @@ function Login({themeColor}) {
         setLoading(true)
         await dispatch(signIn(inputs.email, inputs.password))
         setLoading(false)
-
     }
 
     return (
@@ -51,6 +49,7 @@ function Login({themeColor}) {
                     placeholder='Password'
                     required
                 />
+                <img src='/loader.gif' className='.loader'/>
                 {errorMessage && <p className='info'>{errorMessage}</p>}
                 <button type='submit'>Login</button>
                 <Link href='/forgotpassword'><div className='link'>Forgot Password?</div></Link>
@@ -84,6 +83,14 @@ function Login({themeColor}) {
                     padding: 8px 5%;
                     margin: 10px 5%;
                     font: 15px 'Roboto';
+                    display: ${loading == true ? 'null': 'block'};
+                }
+                .loader {
+                    float: left;
+                    width: 45px;
+                    height: 45px;
+                    margin: 20px 0;
+                    display: ${loading == false ? 'null': 'block'};
                 }
                 button {
                     float: left;
@@ -94,6 +101,7 @@ function Login({themeColor}) {
                     border: none;
                     box-shadow: ${Theme.sh.mat};
                     cursor: pointer;
+                    display: ${loading == false ? 'block': 'null'};
                     font: 16px 'Roboto';
                 }
                 form img {

@@ -1,6 +1,6 @@
 import * as types from '../types'
 import { getProjects } from '../../services/projectservice'
-import { loginRequest } from '../../services/apiservice'
+import { loginRequest, getAllUsers, patchUser } from '../../services/apiservice'
 import jwt_decode from 'jwt-decode';
 import Router from 'next/router';
 import { Cookies } from 'react-cookie';
@@ -14,6 +14,22 @@ export const fetchThoughts = (email, auth) => async dispatch => {
     dispatch({
         type: types.GET_THOUGHTS,
         payload: res.length > 0 ? res: null
+    })
+}
+
+export const updateProfile = (userId, token, inputs) => async dispatch => {
+    const res = await patchUser(userId, token, inputs);
+    console.log(res)
+}
+
+export const getAllUsersAdmin = (token, limit) => async dispatch => {
+    const res = await getAllUsers(token, limit);
+    console.log(res)
+    dispatch({
+        type: types.GET_ALLUSERS,
+        payload: res.length > 0 ? res: null,
+        error: null,
+        errorMessage: null
     })
 }
 

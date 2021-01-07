@@ -3,7 +3,7 @@
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/": "pages/index.js",
-  "/createprofile": "pages/createprofile.js",
-  "/dashboard": "pages/dashboard.js",
-  "/myprofile": "pages/myprofile.js"
+  "/login": "pages/login.js",
+  "/myprofile": "pages/myprofile.js",
+  "/dashboard": "pages/dashboard.js"
 }

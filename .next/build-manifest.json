@@ -29,15 +29,15 @@
       "static/chunks/webpack.js",
       "static/chunks/pages/_error.js"
     ],
-    "/createprofile": [
-      "static/chunks/main.js",
-      "static/chunks/webpack.js",
-      "static/chunks/pages/createprofile.js"
-    ],
     "/dashboard": [
       "static/chunks/main.js",
       "static/chunks/webpack.js",
       "static/chunks/pages/dashboard.js"
+    ],
+    "/login": [
+      "static/chunks/main.js",
+      "static/chunks/webpack.js",
+      "static/chunks/pages/login.js"
     ],
     "/myprofile": [
       "static/chunks/main.js",

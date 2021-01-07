@@ -1,11 +1,13 @@
 import Link from 'next/link'
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Theme from '../styles/theme'
 import { useState, useEffect } from 'react'
 import { ToggleSwitch, When } from '../components/elements';
-import { patchUser } from '../services/apiservice';
+import { updateProfile } from '../store/actions/postAction';
 
 function MyProfile({themeColor}) {
+
+    const dispatch = useDispatch()
     const {profile, auth} = useSelector(state => state.post)
     const initialState = {
         email: profile ? profile.email: null,
@@ -15,6 +17,7 @@ function MyProfile({themeColor}) {
     };
     const [inputs, setInputs] = useState(initialState)
     const [hasChanged, setChanged] = useState(false)
+    console.log(hasChanged)
 
     const handleChange = (e) => {
         e.persist()
@@ -22,10 +25,10 @@ function MyProfile({themeColor}) {
         setInputs({...inputs, [e.target.name]: e.target.value})
     }
 
-    const updateProfile = async (e) => {
+    const submitChanges = async (e) => {
         e.preventDefault()
-        const update = await patchUser(profile ? profile.userId: null, auth ? auth.accessToken: null, inputs)
-        if(update) console.log(update)
+        dispatch(updateProfile(profile.userId, auth.accessToken, inputs))
+        
     }
 
     const toggleTheme = (e) => {
@@ -38,8 +41,8 @@ function MyProfile({themeColor}) {
     return (
         <div className='profile'>
             <img className='userIcon' src="/userIcon.png"/>
-            <h1>{profile && profile.name}</h1>
-            <form onSubmit={updateProfile}>
+            <h1>My Profile</h1>
+            <form onSubmit={submitChanges} autoComplete='off'>
                 <div className='line'></div>
                 <div className='section'>
                     <label>Email: </label>
@@ -47,6 +50,7 @@ function MyProfile({themeColor}) {
                         name='email'
                         value={inputs.email}
                         onChange={handleChange}
+                        autoComplete='off'
                     />
                 </div>
                 <div className='line'></div>
@@ -56,6 +60,7 @@ function MyProfile({themeColor}) {
                         name='firstName'
                         value={inputs.firstName}
                         onChange={handleChange}
+                        autoComplete='off'
                     />
                 </div>
                 <div className='line'></div>
@@ -65,6 +70,7 @@ function MyProfile({themeColor}) {
                         name='lastName'
                         value={inputs.lastName}
                         onChange={handleChange}
+                        autoComplete='off'
                     />
                 </div>
                 <div className='line'></div>
@@ -78,9 +84,7 @@ function MyProfile({themeColor}) {
                     <ToggleSwitch active={inputs.themeDefault === 'Light' ? true: false} onClick={toggleTheme} floatLeft={true} />
                     <label>{inputs.themeDefault === 'Light' ? 'Light': 'Dark'}</label>
                 </div>
-                <When condition={hasChanged}>
-                    <button type='submit'>Save Changes</button>
-                </When>
+                {hasChanged && <button type='submit'>Save Changes</button>}
             </form>
             <Link href='/forgotpassword'><h2>Forgot Password</h2></Link>
             <style jsx>{`
@@ -88,12 +92,15 @@ function MyProfile({themeColor}) {
                     float: left;
                     width: 100%;
                     margin: 10px 0;
+                    padding: 15px 0;
                     display: flex;
                     align-items: center;
+                    border-bottom: 1px solid ${themeColor == '#ffffff' ? Theme.colors.dark: 'white'};
                     justify-content: space-between;
                 }
                 input {
                     margin: 0px 0;
+                    min-width: 30%;
                 }
                 .profile {
                     float: left;
@@ -115,7 +122,7 @@ function MyProfile({themeColor}) {
                 }
                 h1 {
                     float: left;
-                    margin: 10px;
+                    margin: 0;
                     font: 32px 'Montserrat';
                     width: 100%;
                     text-align: center;
@@ -145,6 +152,9 @@ function MyProfile({themeColor}) {
                     float: left;
                     margin: 12px 5px;
                     font: 16px 'Roboto';
+                }
+                form button {
+                    margin: 20px 0;
                 }
                 h2 {
                     float: left;

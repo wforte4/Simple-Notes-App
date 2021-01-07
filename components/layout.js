@@ -13,6 +13,8 @@ function Navigation({themeColor, setTheme, show, profile}) {
     const [active, setActive] = useState(false)
     const router = useRouter()
 
+    console.log(profile)
+
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -44,20 +46,19 @@ function Navigation({themeColor, setTheme, show, profile}) {
                 {profile ? null: <Link href='/login'><li>Login</li></Link>}
                 {profile ? null: <Link href='/createprofile'><li>Create Profile</li></Link>}
             </ul>
-            <When condition={profile}>
-                <div className='profile' onClick={toggleActive}>
-                    <h1>Hi, {profile && profile.firstName}</h1>
-                    <HamburgerEx active={active} top='35px' right='15px' themeColor={themeColor}/>
-                </div>
-            </When>
+            <div className='profile' onClick={toggleActive}>
+                <h1>Hi, {profile && profile.firstName}</h1>
+                <HamburgerEx active={active} top='25px' right='15px' themeColor={themeColor}/>
+            </div>
             <DropDown
                 width='200px'
                 height='auto'
-                top='100px'
-                right='10px'
+                top='80px'
+                right='5px'
                 isActive={active}
                 background={themeColor}
                 links={[
+                    {href: '/admin', title: 'Admin'},
                     {href: '/dashboard', title: 'Dashboard'},
                     {href: '/myprofile', title: 'My Profile' }, 
                     {action: ()=> {
@@ -68,7 +69,7 @@ function Navigation({themeColor, setTheme, show, profile}) {
             >
                 <div className='toggletheme'>
                     <h2>{themeColor === '#ffffff' ? 'Light': 'Dark'}</h2>
-                    <ToggleSwitch top='18px' right='30px' margin={'10px'} active={themeColor === '#ffffff' ? true: false} onClick={toggleTheme}/>
+                    <ToggleSwitch top='18px' right='30px' margin={'10px'} active={themeColor == '#ffffff' ? true: false} onClick={toggleTheme}/>
                 </div>
             </DropDown>
             <style jsx>{`
@@ -77,10 +78,10 @@ function Navigation({themeColor, setTheme, show, profile}) {
                     top: 0;
                     left: 0;
                     width: 100%;
-                    height: 100px;
+                    height: 80px;
                     transition: all .3s ease;
                     display: ${show == false ? 'none': 'block'};
-                    background: ${themeColor === '#ffffff' ? 'rgba(255,255,255,.9)': 'rgba(20,20,20,.9)'};
+                    background: ${themeColor == '#ffffff' ? 'rgba(255,255,255,.9)': 'rgba(20,20,20,.9)'};
                     backdrop-filter: blur(12px);
                     z-index: 99;
                     box-shadow: ${Theme.sh.mat};
@@ -103,8 +104,9 @@ function Navigation({themeColor, setTheme, show, profile}) {
                     top: 0;
                     right: 10px;
                     width: 230px;
-                    height: 100px;
+                    height: 80px;
                     cursor: pointer;
+                    display: ${profile == null ? 'none': 'block'};
                 }
                 .profile img {
                     position: absolute;
@@ -119,13 +121,13 @@ function Navigation({themeColor, setTheme, show, profile}) {
                     font: 15px 'Roboto';
                     color: ${themeColor === '#ffffff' ? Theme.colors.dark: 'white'};
                     margin: 0;
-                    margin-top: 50px;
+                    margin-top: 40px;
                     transform: translate(-60%,-50%);
                     margin-left: 50%;
                 }
                 .navLinks {
                     float: left;
-                    margin: 22px 20px;
+                    margin: 13px 20px;
                     padding: 10px 0;
                 }
                 .navLinks li {
@@ -138,13 +140,13 @@ function Navigation({themeColor, setTheme, show, profile}) {
                 }
                 .logo {
                     float: left;
-                    width: 70px;
-                    height: 70px;
+                    width: 50px;
+                    height: 50px;
                     padding: 15px;
                 }
                 .title {
                     float: left;
-                    font: 38px ${Theme.font.title};
+                    font: 28px ${Theme.font.title};
                     color: ${themeColor === '#ffffff' ? Theme.colors.dark: 'white'};
                     margin: 15px 2.5px;
                     padding: 10px 2.5px;
@@ -160,6 +162,14 @@ function Navigation({themeColor, setTheme, show, profile}) {
                     -webkit-background-clip: text;
                     -webkit-text-fill-color: transparent;
                 }
+                @media only screen and (max-width: 600px) {
+                    .title {
+                        font-size: 28px;
+                    }
+                    .profile h1 {
+                        display: none;
+                    }
+                }
             `}</style>
         </div>
     )
@@ -171,8 +181,8 @@ function Footer({themeColor, show, profile}) {
 
             <img src='/mainicon.png' className='logo'/>
             <Link href='/'><h1 className="title up">Synapse</h1></Link><Link href='/'><h1 className="title flash">Flash</h1></Link>
-            <Row height='350px'>
-                <Col>
+            <Row height='auto'>
+                <Col minheight='400px'>
                     <ul className='navLinks'>
                         <h2>Navigation</h2>
                         <Link href='/'><li>Home</li></Link>
@@ -180,7 +190,7 @@ function Footer({themeColor, show, profile}) {
                         {profile ? null: <Link href='/createprofile'><li>Create Profile</li></Link>}
                     </ul>
                 </Col>
-                <Col>
+                <Col minheight='400px'>
                     <ul className='navLinks'>
                         <h2>Social Media</h2>
                         <Link href='/'><li>Facebook</li></Link>
@@ -218,13 +228,11 @@ function Footer({themeColor, show, profile}) {
                     opacity: 1;
                 }
                 .bottomBar {
+                    float: left;
                     background: ${themeColor === '#ffffff' ? 'grey': 'black'};
                     min-height: 100px;
-                    position: absolute;
-                    bottom: 0;
-                    left: 0;
                     width: 90%;
-                    padding: 5px 5%;
+                    padding: 0px 5%;
                 }
                 .bottomBar h2 {
                     color: white;
@@ -234,13 +242,13 @@ function Footer({themeColor, show, profile}) {
                 }
                 .logo {
                     float: left;
-                    width: 70px;
-                    height: 70px;
+                    width: 50px;
+                    height: 50px;
                     padding: 15px;
                 }
                 .title {
                     float: left;
-                    font: 38px ${Theme.font.title};
+                    font: 28px ${Theme.font.title};
                     color: ${themeColor === '#ffffff' ? Theme.colors.dark: 'white'};
                     margin: 15px 2.5px;
                     padding: 10px 2.5px;
@@ -263,7 +271,7 @@ function Footer({themeColor, show, profile}) {
                     transition: background .3s ease;
                     background: ${themeColor};
                     box-shadow: ${Theme.sh.mat};
-                    min-height: 600px;
+                    height: auto;
                     display: ${show == false ? 'none': 'block'};
                 }
             `}</style>
@@ -283,6 +291,10 @@ function Layout({children, themeColor, setTheme, router, profile}) {
         <div id='layout'>
             <Head>
                 <link rel="preconnect" href="https://fonts.gstatic.com"/>
+                <link rel="icon" 
+                        type="image/png" 
+                        href="/mainicon.png"/>
+                <title>Synapse Flash</title>
                 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300&display=swap" rel="stylesheet"/>
                 <link href="https://fonts.googleapis.com/css2?family=Andika+New+Basic&family=Montserrat:wght@700&family=Roboto:wght@300&display=swap" rel="stylesheet"/>
             </Head>

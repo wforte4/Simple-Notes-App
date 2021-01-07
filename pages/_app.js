@@ -11,19 +11,26 @@ import Theme from '../styles/theme';
 
 function MyApp({ Component, pageProps, router}) {
   const [loading, setLoading] = useState(false)
-  const {profile} = useSelector(state => state.post)
-  const [themeColor, setTheme] = useState(profile ? profile.userTheme == 'Light' ? '#ffffff': Theme.colors.dark: '#ffffff')
+  const {profile, auth} = useSelector(state => state.post)
+  const [userProfile, setProfile] = useState(profile)
+  const [authorization, setAuthorization] = useState(auth)
+  const [themeColor, setTheme] = useState(userProfile ? userProfile.userTheme == 'Light' ? '#ffffff': Theme.colors.dark: '#ffffff')
   Router.events.on('routeChangeStart', () => setLoading(true))
   Router.events.on('routeChangeComplete', () => setLoading(false))
   Router.events.on('routeChangeError', ()=> setLoading(false))
+
+  // Sync Profile with redux 
+  
   useEffect(() => {
-    setTheme(profile ? profile.userTheme == 'Light' ? '#ffffff': Theme.colors.dark: '#ffffff')
+    setProfile(profile)
+    setAuthorization(auth)
+    setTheme(userProfile ? userProfile.userTheme == 'Light' ? '#ffffff': Theme.colors.dark: '#ffffff')
   }, [profile])
 
   return (
     <Provider store={store}>
-      <Layout profile={profile} themeColor={themeColor} setTheme={setTheme} router={router}>
-        <Component themeColor={themeColor} {...pageProps}></Component>
+      <Layout profile={userProfile} themeColor={themeColor} setTheme={setTheme} router={router}>
+        <Component auth={authorization} user={userProfile} themeColor={themeColor} {...pageProps}></Component>
       </Layout>
     </Provider>
   )
