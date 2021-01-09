@@ -3,7 +3,8 @@ const Theme = {
         mat: "0 0 2px rgba(20,20,20,.5)",
         hardmat: "0 0 2px rgba(20,20,20,.8)",
         glowinset: "inset 0 0 5px #9803ba",
-        glow: "0 0 5px #9803ba"
+        glow: "0 0 5px #9803ba",
+        grey: "0 0 2px rgba(120,120,120,.8)"
     },
     font: {
         title: "'Montserrat'",

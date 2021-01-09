@@ -134,10 +134,8 @@ export async function patchUser(userId, token, userData) {
         },
         body: JSON.stringify({ userData })
     })
-    .then(function(response) {
-        console.log(response.status)
-        return response.json()
-    })
+    .then(res => (res.ok ? res: Promise.reject(res)))
+    .then(res => res.json())
     .catch(function(error) {
         console.log('Request failed', error);
     });
@@ -161,15 +159,16 @@ export async function getAllUsers(token, limit) {
             "limit": limit
         })
     })
-    .then(function(response) {
-        return response.json();
+    .then(res => {
+        console.log(res)
+        if(!res.ok) return res.status
+        else {
+            return res.json()
+        }
     })
     .then(function(data) {
         return data
     })
-    .catch(function(error) {
-        return error
-    });
     if(allUsers) {
         return allUsers
     }

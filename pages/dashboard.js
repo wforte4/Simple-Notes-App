@@ -4,6 +4,7 @@ import Theme from '../styles/theme'
 import { uploadThought } from '../services/thoughtservice'
 import { fetchThoughts } from "../store/actions/postAction"
 import Link from 'next/link'
+import { useWindowSize } from "../components/hooks"
 
 function Dashboard({themeColor}) {
 
@@ -14,6 +15,9 @@ function Dashboard({themeColor}) {
         user: profile,
         auth: auth
     })
+    const [focus, setFocus] = useState(0)
+    const window = useWindowSize()
+    const offset = window.height
 
     useEffect(() => {
         dispatch(fetchThoughts(profile.email, auth))
@@ -36,7 +40,7 @@ function Dashboard({themeColor}) {
 
     return (
         <div className='dash'>
-            <Link href='/'><div className='link'>Back to home</div></Link>
+            <div className='top-right'><Link href='/'><div className='link '>Back to home</div></Link></div>
             <div className='uploadThought'>
                 <form onSubmit={uploadNewThought}>
                     <label>Start Thinking</label>
@@ -49,9 +53,33 @@ function Dashboard({themeColor}) {
                         required
                     />
                     <button type='submit'>Upload Thought</button>
+                    <div className='seemind link' onClick={()=> setFocus(1)}>See my mind</div>
                 </form>
             </div>
+            <div className="mindmap">
+                <div className='link' onClick={()=> setFocus(0)}>Back to upload</div>
+                <div className='map'>
+                    
+                </div>
+            </div>
             <style jsx>{`
+                .seemind {
+                    float: left;
+                }
+                .mindmap {
+
+                    display: flex;
+                    justify-content: center;
+                    margin-top: 60px;
+                }
+                .top-right {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    z-index: 20;
+                    width: 100%;
+                    background: ${themeColor};
+                }
                 .thinklogo {
                     float: left;
                     width: 60px;
@@ -68,10 +96,18 @@ function Dashboard({themeColor}) {
                     transform: translate(-50%);
                 }
                 .uploadThought {
-                    width: 70%;
+                    width: 100%;
+                    height: 100%;
                     border-radius: 4px;
                     box-shadow: ${Theme.sh.mat};
                     position: absolute;
+                    transition: all .8s ease-in-out;
+                    margin-top: -${focus * offset}px;
+                    background: ${themeColor};
+                    box-shadow: ${Theme.sh.grey};
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
                     top: 50%;
                     left: 50%;
                     transform: translate(-50%,-50%);
@@ -84,6 +120,7 @@ function Dashboard({themeColor}) {
                     justify-content: center;
                     align-items: center;
                     flex-flow: column wrap;
+                    height: auto;
                 }
                 .uploadThought label {
                     float: left;

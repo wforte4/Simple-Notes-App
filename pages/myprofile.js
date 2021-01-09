@@ -9,15 +9,30 @@ function MyProfile({themeColor}) {
 
     const dispatch = useDispatch()
     const {profile, auth} = useSelector(state => state.post)
-    const initialState = {
-        email: profile ? profile.email: null,
-        firstName: profile ? profile.firstName: null,
-        lastName: profile ? profile.lastName: null,
-        themeDefault: profile ? profile.userTheme: null
-    };
-    const [inputs, setInputs] = useState(initialState)
+    const [thisProfile, setProfile] = useState(null)
+    const [authorization, setAuth] = useState(null)
+    const [inputs, setInputs] = useState({
+        email: '',
+        firstName: '',
+        lastName: '',
+        themeDefault: ''
+    })
     const [hasChanged, setChanged] = useState(false)
-    console.log(hasChanged)
+    console.log(thisProfile)
+
+    useEffect(() => {
+        if(profile) {
+            setProfile(profile)
+            setAuth(auth)
+            setInputs({
+                email: profile.email,
+                firstName: profile.firstName,
+                lastName: profile.lastName,
+                themeDefault: profile.userTheme
+            })
+
+        }
+    }, [thisProfile == null && auth && profile])
 
     const handleChange = (e) => {
         e.persist()
@@ -27,7 +42,7 @@ function MyProfile({themeColor}) {
 
     const submitChanges = async (e) => {
         e.preventDefault()
-        dispatch(updateProfile(profile.userId, auth.accessToken, inputs))
+        dispatch(updateProfile(profile.userId, authorization.accessToken, inputs))
         
     }
 

@@ -28,7 +28,6 @@ function Login({themeColor}) {
         await dispatch(signIn(inputs.email, inputs.password))
         setLoading(false)
     }
-    console.log(loading)
 
     return (
         <div id="body">

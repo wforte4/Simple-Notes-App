@@ -1,6 +1,7 @@
 import { getAllUsersAdmin } from '../store/actions/postAction'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import Router from 'next/router'
 
 function Admin({user, auth}) {
 
@@ -9,7 +10,9 @@ function Admin({user, auth}) {
     console.log(user)
     console.log(auth)
     useEffect(() => {
-        dispatch(getAllUsersAdmin(auth.accessToken, 50))
+        if(auth) {
+            dispatch(getAllUsersAdmin(auth.accessToken, 50))
+        }
     }, [])
 
     return  (
@@ -24,7 +27,7 @@ function Admin({user, auth}) {
             <div className='allUsers'>
                 {allusers && allusers.map((user, i) => {
                     return (
-                        <div className='singleUser'>
+                        <div key={i} className='singleUser'>
                             <h2 className='rightborder'>{user.firstName}</h2>
                             <h2 className='rightborder'>{user.lastName}</h2>
                             <h2 className='rightborder'>{user.email}</h2>
@@ -92,6 +95,20 @@ function Admin({user, auth}) {
             `}</style>
         </div>
     )
+}
+
+Admin.getInitialProps = async(ctx) => {
+    if(ctx.auth) {
+        console.log(ctx.auth);
+    } else {
+        if(ctx.res) {
+            ctx.res.writeHead(302, {
+              Location: `/error?errorMessage=${401}`
+            })
+            ctx.res.end()
+        }
+    }
+    return {status: 'auth'}
 }
 
 export default Admin

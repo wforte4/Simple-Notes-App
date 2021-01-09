@@ -18,6 +18,7 @@ export const fetchThoughts = (email, auth) => async dispatch => {
 }
 
 export const updateProfile = (userId, token, inputs) => async dispatch => {
+    console.log(token)
     const res = await patchUser(userId, token, inputs);
     console.log(res)
 }
@@ -25,6 +26,7 @@ export const updateProfile = (userId, token, inputs) => async dispatch => {
 export const getAllUsersAdmin = (token, limit) => async dispatch => {
     const res = await getAllUsers(token, limit);
     console.log(res)
+    if(res === 403 || res === 401) await Router.push(`/error?errorMessage=${res}`)
     dispatch({
         type: types.GET_ALLUSERS,
         payload: res.length > 0 ? res: null,
