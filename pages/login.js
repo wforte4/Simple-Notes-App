@@ -28,28 +28,29 @@ function Login({themeColor}) {
         await dispatch(signIn(inputs.email, inputs.password))
         setLoading(false)
     }
+    console.log(loading)
 
     return (
         <div id="body">
             <img id="bgbody" src="/mainbg.png"/>
             <form onSubmit={submitForm}>
-                <img src="/think.png"/>
-                <input
+                <img src="/think.png" className='cloud'/>
+                {!loading && <input
                     name='email'
                     value={inputs.email}
                     onChange={handleType}
                     placeholder='Email Address'
                     required
-                />
-                <input
+                />}
+                {!loading && <input
                     name='password'
                     type='password'
                     value={inputs.password}
                     onChange={handleType}
                     placeholder='Password'
                     required
-                />
-                <img src='/loader.gif' className='.loader'/>
+                />}
+                {loading && <img src='/loader.gif' className='loading'/>}
                 {errorMessage && <p className='info'>{errorMessage}</p>}
                 <button type='submit'>Login</button>
                 <Link href='/forgotpassword'><div className='link'>Forgot Password?</div></Link>
@@ -57,7 +58,7 @@ function Login({themeColor}) {
             <style jsx>{`
                 form {
                     width: 350px;
-                    height: 450px;
+                    height: auto;
                     position: absolute;
                     top: 50%;
                     left: 50%;
@@ -83,14 +84,12 @@ function Login({themeColor}) {
                     padding: 8px 5%;
                     margin: 10px 5%;
                     font: 15px 'Roboto';
-                    display: ${loading == true ? 'null': 'block'};
                 }
-                .loader {
+                .loading {
                     float: left;
-                    width: 45px;
-                    height: 45px;
+                    width: 25px;
+                    height: 25px;
                     margin: 20px 0;
-                    display: ${loading == false ? 'null': 'block'};
                 }
                 button {
                     float: left;
@@ -104,7 +103,7 @@ function Login({themeColor}) {
                     display: ${loading == false ? 'block': 'null'};
                     font: 16px 'Roboto';
                 }
-                form img {
+                .cloud {
                     float: left;
                     width: 80px;
                     height: 80px;
