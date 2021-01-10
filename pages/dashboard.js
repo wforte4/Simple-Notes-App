@@ -4,6 +4,7 @@ import Theme from '../styles/theme'
 import { uploadThought } from '../services/thoughtservice'
 import { fetchThoughts } from "../store/actions/postAction"
 import Link from 'next/link'
+import { Date, getDate } from '../components/elements'
 import { useWindowSize } from "../components/hooks"
 
 function Dashboard({themeColor}) {
@@ -59,17 +60,42 @@ function Dashboard({themeColor}) {
             <div className="mindmap">
                 <div className='link' onClick={()=> setFocus(0)}>Back to upload</div>
                 <div className='map'>
-                    
+                    {thoughts && thoughts.map((thought, i) => {
+                        const {date, time} = getDate(thought.created_at)
+                        return (
+                            <div className='thought'>
+                                <h3>{thought.thought}</h3>
+                                <h3>{date}</h3>
+                            </div>
+                        )
+                    })}
                 </div>
             </div>
             <style jsx>{`
                 .seemind {
                     float: left;
                 }
-                .mindmap {
-
+                .map {
+                    float: left;
+                    width: 80%;
                     display: flex;
                     justify-content: center;
+                    align-items: center;
+                    flex-flow: column wrap;
+                }
+                .thought {
+                    float: left;
+                    width: 90%;
+                }
+                .thought h3 {
+                    float: left;
+                    font: 16px 'Roboto';
+                }
+                .mindmap {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    flex-flow: column wrap;
                     margin-top: 60px;
                 }
                 .top-right {

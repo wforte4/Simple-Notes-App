@@ -79,17 +79,17 @@ function Navigation({themeColor, setTheme, show}) {
                 </div>
             </div>
             <DropDown
-                width='200px'
+                width='280px'
                 height='auto'
-                top='70px'
+                top='65px'
                 right='5px'
                 isActive={active}
                 background={themeColor}
                 links={links}
             >
                 <div className='toggletheme'>
-                    <h2>{themeColor === '#ffffff' ? 'Light': 'Dark'}</h2>
-                    <ToggleSwitch top='18px' right='30px' margin={'10px'} active={themeColor == '#ffffff' ? true: false} onClick={toggleTheme}/>
+                    <h2>Theme Color: {themeColor === '#ffffff' ? 'Light': 'Dark'}</h2>
+                    <ToggleSwitch top='10px' right='20px' margin={'10px'} active={themeColor == '#ffffff' ? true: false} onClick={toggleTheme}/>
                 </div>
             </DropDown>
             <style jsx>{`
@@ -111,14 +111,16 @@ function Navigation({themeColor, setTheme, show}) {
                 }
                 .toggletheme {
                     float: left;
-                    width: 100%;
+                    width: 90%;
                     position: relative;
-                    box-shadow: ${Theme.sh.mat};
-                    padding: 10px 0;
+                    box-shadow: ${Theme.sh.grey};
+                    border-radius: 14px;
+                    padding: 5px 0;
+                    margin: 10px 5%;
                 }
                 .toggletheme h2 {
                     float: left;
-                    font: 16px 'Roboto';
+                    font: 13px 'Roboto';
                     margin: 10px 30px;
                     color: ${themeColor === '#ffffff' ? Theme.colors.dark: 'white'};
                 }
@@ -240,6 +242,10 @@ function Footer({themeColor, show, profile}) {
                 .navLinks {
                     padding: 0;
                     width: 200px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    flex-flow: column wrap;
                 }
                 .navLinks h2 {
                     float: left;
@@ -249,15 +255,24 @@ function Footer({themeColor, show, profile}) {
                 }
                 .navLinks li {
                     float: left;
+                    width: auto;
                     list-style: none;
-                    width: 100%;
-                    text-align: center;
                     padding: 5px 0;
                     cursor: pointer;
                     opacity: .8;
                     transition: all .3s ease;
+                    line-height: 28px;
                     font: 16px ${Theme.font.style};
                 }
+                .navLinks li:after {
+                  display:block;
+                  content: '';
+                  border-bottom: solid 2px ${Theme.colors.purple};  
+                  transform: scaleX(0);  
+                  transition: transform 250ms ease-in-out;
+                }
+                .navLinks li:after{ transform-origin: 100% 50%; }
+                .navLinks li:hover:after{ transform: scaleX(1); transform-origin: 0% 50%; }
                 .navLinks li:hover {
                     opacity: 1;
                 }
@@ -304,7 +319,7 @@ function Footer({themeColor, show, profile}) {
                     width: 100%;
                     transition: background .3s ease;
                     background: ${themeColor};
-                    box-shadow: ${Theme.sh.mat};
+                    box-shadow: ${Theme.sh.grey};
                     height: auto;
                     display: ${show == false ? 'none': 'block'};
                 }

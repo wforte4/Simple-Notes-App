@@ -105,12 +105,13 @@ function MyProfile({themeColor}) {
             <style jsx>{`
                 .section {
                     float: left;
-                    width: 100%;
-                    margin: 10px 0;
-                    padding: 15px 0;
+                    width: 95%;
+                    margin: 6px 0;
+                    padding: 10px 2.5%;
                     display: flex;
                     align-items: center;
-                    border-bottom: 1px solid ${themeColor == '#ffffff' ? Theme.colors.dark: 'white'};
+                    border-radius: 4px;
+                    box-shadow: ${Theme.sh.grey};
                     justify-content: space-between;
                 }
                 input {
@@ -124,7 +125,7 @@ function MyProfile({themeColor}) {
                     padding: 10px 5%;
                     min-height: 200px;
                     margin-top: 140px;
-                    box-shadow: ${Theme.sh.mat};
+                    box-shadow: ${Theme.sh.grey};
                     border-radius: 4px;
                 }
                 .userIcon {

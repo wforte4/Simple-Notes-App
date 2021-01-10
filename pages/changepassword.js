@@ -40,7 +40,6 @@ function ChangePassword({auth}) {
         <div className='forgotpass'>
             <div className='center'>
                 <h1>Change Password</h1>
-                <When condition={!loading && !confirmation}>
                     <form onSubmit={handleSubmit}>
                         <input
                             name='newpass'
@@ -61,7 +60,6 @@ function ChangePassword({auth}) {
                         {error ? <div className='info'>{error}</div>: null}
                         <button type='submit'>Change Pass</button>
                     </form>
-                </When>
                 <img className='loader' src='/loader.gif'/>
                 {confirmation && <div className='confirmation'>Your password has successfully been changed!</div>}
                 {confirmation && <Link href='/login'><div className='link'>Go to login</div></Link>}
@@ -99,6 +97,7 @@ function ChangePassword({auth}) {
                 input {
                     margin: 10px;
                     min-width: 250px;
+                    display: ${loading || confirmation ? 'none': 'block'};
                 }
                 form {
                     justify-content: center;
