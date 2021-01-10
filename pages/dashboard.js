@@ -44,7 +44,7 @@ function Dashboard({themeColor}) {
             <div className='top-right'><Link href='/'><div className='link '>Back to home</div></Link></div>
             <div className='uploadThought'>
                 <form onSubmit={uploadNewThought}>
-                    <label>Start Thinking</label>
+                    <label>Thought</label>
                     <img className='thinklogo' src='/think.png'/>
                     <textarea
                         name='thought'
@@ -58,7 +58,7 @@ function Dashboard({themeColor}) {
                 </form>
             </div>
             <div className="mindmap">
-                <div className='link' onClick={()=> setFocus(0)}>Back to upload</div>
+                <div className='link' style={{margin: '30px 0'}} onClick={()=> setFocus(0)}>Back to upload</div>
                 <div className='map'>
                     {thoughts && thoughts.map((thought, i) => {
                         const {date, time} = getDate(thought.created_at)
@@ -105,6 +105,7 @@ function Dashboard({themeColor}) {
                     z-index: 20;
                     width: 100%;
                     background: ${themeColor};
+                    box-shadow: ${Theme.sh.grey};
                 }
                 .thinklogo {
                     float: left;
@@ -127,7 +128,7 @@ function Dashboard({themeColor}) {
                     border-radius: 4px;
                     box-shadow: ${Theme.sh.mat};
                     position: absolute;
-                    transition: all .8s ease-in-out;
+                    transition: all .4s ease-in-out;
                     margin-top: -${focus * offset}px;
                     background: ${themeColor};
                     box-shadow: ${Theme.sh.grey};

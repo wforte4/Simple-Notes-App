@@ -12,7 +12,7 @@ function Navigation({themeColor, setTheme, show}) {
     const [active, setActive] = useState(false)
     const router = useRouter()
     const [links, setLinks] = useState([
-        {href: '/dashboard', title: 'Dashboard'},
+        {href: '/dashboard', title: 'Start Thinking'},
         {href: '/myprofile', title: 'My Profile' }, 
         {action: ()=> {
             logout()
@@ -42,7 +42,7 @@ function Navigation({themeColor, setTheme, show}) {
         await dispatch(signOut())
         setProfile(null)
         setLinks([
-            {href: '/dashboard', title: 'Dashboard'},
+            {href: '/dashboard', title: 'Start Thinking'},
             {href: '/myprofile', title: 'My Profile' }, 
             {action: ()=> {
                 logout()
@@ -75,21 +75,21 @@ function Navigation({themeColor, setTheme, show}) {
                 </ul>
                 <div className='profile' onClick={toggleActive}>
                     <h1>Hi, {userProfile && userProfile.firstName}</h1>
-                    <HamburgerEx active={active} top='20px' right='15px' themeColor={themeColor}/>
+                    <HamburgerEx active={active} top='20px' right='20px' themeColor={themeColor}/>
                 </div>
             </div>
             <DropDown
                 width='280px'
                 height='auto'
                 top='65px'
-                right='5px'
+                right='10px'
                 isActive={active}
                 background={themeColor}
                 links={links}
             >
                 <div className='toggletheme'>
                     <h2>Theme Color: {themeColor === '#ffffff' ? 'Light': 'Dark'}</h2>
-                    <ToggleSwitch top='10px' right='20px' margin={'10px'} active={themeColor == '#ffffff' ? true: false} onClick={toggleTheme}/>
+                    <ToggleSwitch top='10px' right='20px' margin='15px' active={themeColor == '#ffffff' ? true: false} onClick={toggleTheme}/>
                 </div>
             </DropDown>
             <style jsx>{`
@@ -142,12 +142,11 @@ function Navigation({themeColor, setTheme, show}) {
                 .profile h1 {
                     float: left;
                     font: 16px 'Roboto';
-                    font-weight: bold;
                     white-space: nowrap;
                     color: ${themeColor === '#ffffff' ? Theme.colors.dark: 'white'};
                     margin: 0;
                     margin-top: 35px;
-                    margin-right: 100px;
+                    margin-right: 110px;
                     transform: translate(-60%,-50%);
                     margin-left: 50%;
                 }
@@ -179,12 +178,13 @@ function Navigation({themeColor, setTheme, show}) {
                     width: 40px;
                     height: 40px;
                     padding: 10px;
+                    margin: 5px;
                 }
                 .title {
                     float: left;
                     font: 24px ${Theme.font.title};
                     color: ${themeColor === '#ffffff' ? Theme.colors.dark: 'white'};
-                    margin: 5px 2.5px;
+                    margin: 10px 2.5px;
                     padding: 10px 2.5px;
                     cursor: pointer;
                     transition: all .3s ease;
@@ -436,6 +436,7 @@ function Layout({children, themeColor, setTheme, router, profile, auth}) {
                     font: 16px 'Roboto';
                     padding: 10px;
                     margin: 5px;
+                    float: left;
                     background: -webkit-linear-gradient(left, ${Theme.colors.pink}, ${Theme.colors.purple}, ${Theme.colors.pinklight});
                     -webkit-background-clip: text;
                     -webkit-text-fill-color: transparent;

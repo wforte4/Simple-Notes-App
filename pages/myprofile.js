@@ -55,8 +55,8 @@ function MyProfile({themeColor}) {
 
     return (
         <div className='profile'>
-            <img className='userIcon' src="/userIcon.png"/>
             <h1>My Profile</h1>
+            <img className='userIcon' src="/think.png"/>
             <form onSubmit={submitChanges} autoComplete='off'>
                 <div className='line'></div>
                 <div className='section'>
@@ -101,13 +101,13 @@ function MyProfile({themeColor}) {
                 </div>
                 {hasChanged && <button type='submit'>Save Changes</button>}
             </form>
-            <Link href='/forgotpassword'><h2>Forgot Password</h2></Link>
+            <Link href='/forgotpassword'><div className='link'>Forgot Password</div></Link>
             <style jsx>{`
                 .section {
                     float: left;
                     width: 95%;
-                    margin: 6px 0;
-                    padding: 10px 2.5%;
+                    margin: 8px 0;
+                    padding: 15px 2.5%;
                     display: flex;
                     align-items: center;
                     border-radius: 4px;
@@ -125,7 +125,6 @@ function MyProfile({themeColor}) {
                     padding: 10px 5%;
                     min-height: 200px;
                     margin-top: 140px;
-                    box-shadow: ${Theme.sh.grey};
                     border-radius: 4px;
                 }
                 .userIcon {
@@ -138,8 +137,8 @@ function MyProfile({themeColor}) {
                 }
                 h1 {
                     float: left;
-                    margin: 0;
-                    font: 32px 'Montserrat';
+                    margin: 10px 0;
+                    font: 26px 'Montserrat';
                     width: 100%;
                     text-align: center;
                 }

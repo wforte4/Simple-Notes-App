@@ -20,12 +20,12 @@ function Index({themeColor}) {
             >
                 <Col>
                     <div className='center'>
-                        <p>Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Proin eget tortor risus. Quisque velit nisi, pretium ut lacinia in, elementum id enim. Donec sollicitudin molestie malesuada. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Curabitur aliquet quam id dui posuere blandit. Curabitur non nulla sit amet nisl tempus convallis quis ac lectus.</p>
+                        <p>This website is going to be intended to help people organize and think more positively. Together we can help change the thoughts inside your brain to empower you to take great action.</p>
                     </div>
                 </Col>
                 <Col>
                     <div className='center'>
-                        <img src='/brainAnatomy.jpg' />    
+                        <img src='/think.png' />    
                     </div>
                 </Col>
             </Row>

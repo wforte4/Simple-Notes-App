@@ -38,7 +38,7 @@ function MyApp({ Component, pageProps, router}) {
       setTheme('#ffffff')
     }
   }, [userProfile != null && profile == null])
-  console.log(userProfile)
+  
   return (
     <Provider store={store}>
       <Layout profile={userProfile} themeColor={themeColor} setTheme={setTheme} router={router} auth={authorization}>

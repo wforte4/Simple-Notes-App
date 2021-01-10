@@ -2,8 +2,9 @@ import { getAllUsersAdmin } from '../store/actions/postAction'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Router from 'next/router'
+import Theme from '../styles/theme'
 
-function Admin({user, auth}) {
+function Admin({user, auth, themeColor}) {
 
     const dispatch = useDispatch()
     const {allusers}  = useSelector(state => state.post)
@@ -38,7 +39,7 @@ function Admin({user, auth}) {
             </div>
             <style jsx>{`
                 .rightborder {
-                    border-right: 1px solid white;
+                    border-right: 1px solid ${themeColor === '#ffffff' ? 'black': 'white'};
                 }
                 .labels {
                     float: left;
@@ -65,17 +66,17 @@ function Admin({user, auth}) {
                     float: left;
                     width: 100%;
                     display: flex;
-                    margin: 10px 0;
+                    margin: 8px 0;
+                    padding: 4px 0;
                     border-radius: 2px;
-                    background: gray;
+                    box-shadow: ${Theme.sh.grey};
                     flex-flow: column no-wrap;
                     justify-content: flex-start;
                 }
                 .singleUser h2 {
                     padding: 10px;
                     margin: 0;
-                    font: 14px 'Roboto';
-                    color: white;
+                    font: 15px 'Roboto';
                     width: 25%;
                     text-align: center;
                     overflow: hidden;
